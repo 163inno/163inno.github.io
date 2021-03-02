@@ -1,0 +1,78 @@
+html, body {
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0px;
+  position: relative;
+  font-family: helvetica;
+  background-color: #F7F7FF;
+}
+
+h1 {
+  font-size: 1em;
+}
+
+#wrapper {
+   background-color: #BDD5EA;
+   text-align: center;
+   font-size: 0.5em;
+   font-weight: bold;
+}
+
+.ACAB {
+  display: grid;
+  grid-template-columns: repeat(16, 1fr);
+}
+.TxM {
+   display: grid;
+   background-color: #5D7083;
+   width: 1fr;
+}
+
+#copy, #reset, #submit {
+    height: 36px;
+    width: 80px;
+    border: none;
+    margin: 2px;
+    background-color: #999999;
+}
+
+.report-container {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  grid-template-rows: 1fr 1fr 2fr;
+  gap: 0px 0px;
+  grid-template-areas:
+    "Report Reset"
+    "Report Copy"
+    "Report Code";
+}
+.Report { grid-area: Report; }
+.Reset { grid-area: Reset; }
+.Copy { grid-area: Copy; }
+.Code { grid-area: Code; }
+
+textarea {
+  width: 90%;
+  height: 90%;
+}
+
+.green {
+  height: 1fr;
+  width: 1fr;
+  margin: 0px;
+  padding: 0px;
+  font-weight: bold;
+  background-color: #58eb34;
+}
+
+
+.red {
+    height: 1fr;
+    width: 1fr;
+    margin: 0px;
+    padding: 0px;
+    font-weight: bold;
+    background-color: #a84432;
+}
