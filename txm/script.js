@@ -144,13 +144,13 @@ function createLink(id) {
   var xhr = new XMLHttpRequest();
   xhr.open('GET', url_request, true);
   xhr.responseType = 'json';
+  xhr.send();
+  alert('sent2');
   xhr.onload = function() {
     var report = document.getElementById("report");
     report.value += JSON.stringify(xhr.response);
     alert(xhr.response);
   };
-  xhr.send();
-  alert('sent');
 }
 
 // Array-of-bools to string converter
