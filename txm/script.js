@@ -161,7 +161,7 @@ function createLink(id) {
   function(err, data) {
     if (err !== null)  alert('Something went wrong: ' + err);
   });
-  return data.url.shortlink;
+  return data.url.shortLink;
 }
 
 // Array-of-bools to string converter
