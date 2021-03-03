@@ -66,7 +66,6 @@ function generateReport() {
    text = "ACAB"+i+": " + counter + "/256 (" + pct + "%)\n" + text + "\n\n";
    report.value += text;
    }
-  report.value += 'Report ID: ' + getUniqueString();
   report.value += '\nReport Link: ' + createLink(getUniqueString());
   document.getElementById("copy").innerHTML = "copy text";
 
@@ -162,7 +161,7 @@ function createLink(id) {
   function(err, data) {
     if (err !== null)  alert('Something went wrong: ' + err);
   });
-  return data.shortlink;
+  return url;
 }
 
 // Array-of-bools to string converter
