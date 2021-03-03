@@ -39,7 +39,7 @@ function generateGrid(index) {
 function generateReport() {
   var report = document.getElementById("report");
   report.value = '';
-  for (let i = 1; i < NUM_ACAB; i++) {
+  for (let i = 1; i <= NUM_ACAB; i++) {
     let text = '';
     let counter = 0;
     for (let j = 1; j <= NUM_TXM; j++) {
