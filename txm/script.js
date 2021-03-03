@@ -144,8 +144,8 @@ function createLink(id) {
   var xhr = new XMLHttpRequest();
   xhr.open('GET', url_request, false);
   xhr.responseType = 'json';
+  alert('sent5: ' + url_request);
   xhr.send(null);
-  alert('sent4');
   alert(xhr.responseText);
   return xhr.responseText;
 }
