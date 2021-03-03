@@ -145,12 +145,12 @@ function createLink(id) {
   xhr.open('GET', url_request, true);
   xhr.responseType = 'json';
   xhr.send();
-  alert('sent2');
-  xhr.onload = function() {
+  alert('sent3');
+  xhr.addEventListener("load", function() {
     var report = document.getElementById("report");
     report.value += JSON.stringify(xhr.response);
     alert(xhr.response);
-  };
+  });
 }
 
 // Array-of-bools to string converter
