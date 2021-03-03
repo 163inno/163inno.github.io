@@ -138,10 +138,6 @@ function setUniqueString() {
   generateReport();
 }
 
-function getJSON(url, callback) {
-    
-};
-
 function createLink(id) {
   let url = encodeURI('http://163inno.github.io/txm/?id=' + id);
   let url_request = 'https://cutt.ly/api/api.php?key='+ API_KEY + '&short=' + url;
@@ -151,8 +147,10 @@ function createLink(id) {
   xhr.onload = function() {
     var report = document.getElementById("report");
     report.value += JSON.stringify(xhr.response);
+    alert(xhr.response);
   };
   xhr.send();
+  alert('sent');
 }
 
 // Array-of-bools to string converter
