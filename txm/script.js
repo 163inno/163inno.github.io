@@ -149,8 +149,8 @@ function createLink(id) {
   xhr.open('GET', url_request, true);
   xhr.responseType = 'json';
   xhr.onload = function() {
-    var code = document.getElementById("code");
-    code.value = xhr.response;
+    var report = document.getElementById("report");
+    report.value += JSON.stringify(xhr.response);
   };
   xhr.send();
 }
