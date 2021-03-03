@@ -154,14 +154,15 @@ function getJSON(url, callback) {
 };
 
 function createLink(id) {
-  let data = {};
+  var linkdata = {};
   let err = null;
   let url = encodeURI('http://163inno.github.io/txm/?id=' + id);
   getJSON('https://cutt.ly/api/api.php?key='+ API_KEY + '&short=' + url,
   function(err, data) {
     if (err !== null)  alert('Something went wrong: ' + err);
+    linkdata = data;
   });
-  return JSON.stringify(data);
+  return JSON.stringify(linkdata);
 }
 
 // Array-of-bools to string converter
