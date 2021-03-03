@@ -7,7 +7,7 @@ body {
   position: relative;
   font-family: helvetica;
   background-color: #F7F7FF;
-  font-size: 14px;
+  font-size: 18px;
 }
 
 h1 {
@@ -17,7 +17,7 @@ h1 {
 #wrapper {
    background-color: #BDD5EA;
    text-align: center;
-   font-size: 14px;
+   font-size: 18px;
    font-weight: bold;
 }
 
@@ -65,7 +65,7 @@ textarea {
   margin: 0px;
   padding: 0px;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 18px;
   background-color: #58eb34;
 }
 
@@ -76,6 +76,6 @@ textarea {
     margin: 0px;
     padding: 0px;
     font-weight: bold;
-    font-size: 14px;
+    font-size: 18px;
     background-color: #a84432;
 }
