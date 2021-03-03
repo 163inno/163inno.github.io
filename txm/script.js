@@ -142,15 +142,12 @@ function createLink(id) {
   let url = encodeURI('http://163inno.github.io/txm/?id=' + id);
   let url_request = 'https://cutt.ly/api/api.php?key='+ API_KEY + '&short=' + url;
   var xhr = new XMLHttpRequest();
-  xhr.open('GET', url_request, true);
+  xhr.open('GET', url_request, false);
   xhr.responseType = 'json';
-  xhr.send();
-  alert('sent3');
-  xhr.addEventListener("load", function() {
-    var report = document.getElementById("report");
-    report.value += JSON.stringify(xhr.response);
-    alert(xhr.response);
-  });
+  xhr.send(null);
+  alert('sent4');
+  alert(xhr.responseText);
+  return xhr.responseText;
 }
 
 // Array-of-bools to string converter
