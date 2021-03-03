@@ -148,16 +148,11 @@ function createLink(id) {
   var xhr = new XMLHttpRequest();
   xhr.open('GET', url_request, true);
   xhr.responseType = 'json';
-//   xhr.onload = function() {
-//     var status = xhr.status;
-//     if (status === 200) {
-//       callback(null, xhr.response);
-//     } else {
-//       callback(status, xhr.response);
-//     }
-//   };
+  xhr.onload = function() {
+    var code = document.getElementById("code");
+    code.value = xhr.response;
+  };
   xhr.send();
-  return JSON.stringify(xhr.response);
 }
 
 // Array-of-bools to string converter
