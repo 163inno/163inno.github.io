@@ -139,30 +139,25 @@ function setUniqueString() {
 }
 
 function getJSON(url, callback) {
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', url, true);
-    xhr.responseType = 'json';
-    xhr.onload = function() {
-      var status = xhr.status;
-      if (status === 200) {
-        callback(null, xhr.response);
-      } else {
-        callback(status, xhr.response);
-      }
-    };
-    xhr.send();
+    
 };
 
 function createLink(id) {
-  var linkdata = {};
-  let err = null;
   let url = encodeURI('http://163inno.github.io/txm/?id=' + id);
-  getJSON('https://cutt.ly/api/api.php?key='+ API_KEY + '&short=' + url,
-  function(err, data) {
-    if (err !== null)  alert('Something went wrong: ' + err);
-    linkdata = data;
-  });
-  return JSON.stringify(linkdata);
+  let url_request = 'https://cutt.ly/api/api.php?key='+ API_KEY + '&short=' + url;
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', url_request, true);
+  xhr.responseType = 'json';
+//   xhr.onload = function() {
+//     var status = xhr.status;
+//     if (status === 200) {
+//       callback(null, xhr.response);
+//     } else {
+//       callback(status, xhr.response);
+//     }
+//   };
+  xhr.send();
+  return JSON.stringify(xhr.response);
 }
 
 // Array-of-bools to string converter
