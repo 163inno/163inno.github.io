@@ -1,6 +1,7 @@
 const NUM_ACAB = 4;
 const NUM_TXM = 32;
 const NUM_ELEM = 8;
+const API_KEY = 'c7a84ece643847df9f7d28439102799f6ee24';
 
 
 function generateGrid(index) {
@@ -66,6 +67,7 @@ function generateReport() {
    report.value += text;
    }
   report.value += 'Report ID: ' + getUniqueString();
+  report.value += '\nReport Link: ' + createLink(getUniqueString());
   document.getElementById("copy").innerHTML = "copy text";
 
 }
@@ -137,6 +139,31 @@ function setUniqueString() {
   generateReport();
 }
 
+function getJSON(url, callback) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', url, true);
+    xhr.responseType = 'json';
+    xhr.onload = function() {
+      var status = xhr.status;
+      if (status === 200) {
+        callback(null, xhr.response);
+      } else {
+        callback(status, xhr.response);
+      }
+    };
+    xhr.send();
+};
+
+function createLink(id) {
+  let data = {};
+  let err = null;
+  let url = encodeURI('http://163inno.github.io/txm/?id=' + id);
+  getJSON('https://cutt.ly/api/api.php?key='+ API_KEY + '&short=' + url,
+  function(err, data) {
+    if (err !== null)  alert('Something went wrong: ' + err);
+  });
+  return data.shortlink;
+}
 
 // Array-of-bools to string converter
 // From: https://stackoverflow.com/questions/59923537/js-convert-a-list-of-bools-to-a-compact-string
