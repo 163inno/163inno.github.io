@@ -39,7 +39,7 @@ function generateGrid(index) {
   
 function generateReport() {
   var report = document.getElementById("report");
-  report.value = '';
+  report.value = 'XXXXXXXXXX TxM Status Report on XXXXXX\n\n';
   for (let i = 1; i <= NUM_ACAB; i++) {
     let text = '';
     let counter = 0;
