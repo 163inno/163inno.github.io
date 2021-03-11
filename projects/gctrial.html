@@ -1,0 +1,22 @@
+<html>
+  <head>
+    <script src='https://unpkg.com/tesseract.js@v2.0.0-alpha.13/dist/tesseract.min.js'></script>
+</head>
+  <body>
+    <select id="langsel">
+  <option value='eng' selected> English </option>
+</select>
+ 
+<input type="file" id="file-1" class="inputfile" />
+ 
+<img id="selected-image"  src="" />
+ 
+<div id="log">
+    <span id="startPre">  
+        <a id="startLink" href="#">Click here to recognize text in the demo</a>
+        <br/> or choose your own image
+    </span>
+</div>
+<script src="js/tesseract-ocr.js"></script>
+  </body>
+</html>
