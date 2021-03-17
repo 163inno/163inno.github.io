@@ -159,7 +159,7 @@ function createLink(id) {
     if (xhr.readyState == 4)
     {
       let url = JSON.parse(xhr.responseText).data.url;
-      document.getElementById("report").innerText += "Report: " + url;
+      document.getElementById("report").innerText += "Visual Report: " + url;
     }
   };
   xhr.open('GET', url_request, true);
