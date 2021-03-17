@@ -48,6 +48,7 @@ function generateGrid(index) {
 }
 
 function generateReport() {
+  report.innerText = '';
   for (let i = 1; i <= NUM_ACAB; i++) {
     let text = '';
     let counter = 0;
