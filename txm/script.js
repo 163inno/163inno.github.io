@@ -46,6 +46,7 @@ function generateGrid(index) {
     }
     container.appendChild(acab);
   }
+  generateReport();
 }
 
 function generateReport() {
