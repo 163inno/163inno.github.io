@@ -29,7 +29,7 @@ h1 {
 .TxM {
    display: grid;
    background-color: #5D7083;
-   height: 45vh;
+   height: 35vh;
 }
 
 #copy, #reset, #submit {
@@ -61,7 +61,7 @@ textarea {
 }
 
 .green {
-  height: 5vh;
+  height: 4vh;
   width: 1fr;
   margin: 0px;
   padding: 0px;
@@ -71,7 +71,7 @@ textarea {
 }
 
 .red {
-    height: 5vh;
+    height: 4vh;
     width: 1fr;
     margin: 0px;
     padding: 0px;
