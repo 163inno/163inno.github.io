@@ -23,6 +23,7 @@ function generateGrid(index) {
     acab.className = "ACAB";
     for (let j = 1; j <= NUM_TXM; j++) {
       var txm = document.createElement("div");
+      txm.id = i + "T"+j;
       let t = document.createTextNode("T"+j);
       txm.appendChild(t);
       txm.className = "TxM";
@@ -54,6 +55,7 @@ function generateReport() {
     let counter = 0;
     for (let j = 1; j <= NUM_TXM; j++) {
        let txm_fail = false;
+       let elem_fails = 0;
        for (let k = 1; k <= NUM_ELEM; k++) {
          let id = triplet_to_id(i, j, k);
          let elem = document.getElementById(id);
@@ -66,9 +68,11 @@ function generateReport() {
            }
            text += "E" + k;
            counter++;
+           elem_fails++;
          }
        }
       if (txm_fail == true) text += "; ";
+      document.getElementById(i+"T"+j).style.backgroundColor = "#FF" + (16-2*elem_fails).toString(16).repeat(2) + "00";
     }
 
   var pct = (counter / 256 * 100).toFixed(1);
