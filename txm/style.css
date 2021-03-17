@@ -35,11 +35,11 @@ h1 {
 }
 
 #copy, #reset, #submit {
-    height: 40px;
-    width: 150px;
+    height: 5vh;
+    width: 25vw;
     border: none;
     margin: 2px;
-    font-size: 20px;
+    font-size: 3vh;
     background-color: #999999;
 }
 
