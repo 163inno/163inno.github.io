@@ -1,10 +1,20 @@
 const NUM_ACAB = 4;
 const NUM_TXM = 32;
 const NUM_ELEM = 8;
-const API_KEY = 'c7a84ece643847df9f7d28439102799f6ee24';
+const API_KEY = '73f84f7dbe7b0f00feb9ca45876d5dd422137aaa';
 
 
 function generateGrid(index) {
+  let report_bools = null;
+  window.location.search
+    .substr(1)
+    .split("&")
+    .forEach(function (item) {
+      let tmp = item.split("=");
+      if (tmp[0] === 'id') report_bools = expand(tmp[1]);
+    });
+    if (report_bools == null) report_bools = new Array(1024).fill(false);
+
   var container = document.getElementById("wrapper");
   for (let i = 1; i <= NUM_ACAB; i++) {
     let t = document.createTextNode("ACAB "+i);
@@ -19,15 +29,14 @@ function generateGrid(index) {
       for (let k = 1; k <= NUM_ELEM; k++) {
         var btn = document.createElement("button");
         txm.appendChild(btn);
-        btn.className = "green";
         btn.id = triplet_to_id(i, j, k);
+        btn.className = report_bools[btn.id] ? "red" : "green";
         let t = document.createTextNode("E"+k);
         btn.appendChild(t);
         btn.onclick = function(ev) {
           if (ev.target.className == 'red')
             ev.target.className = 'green';
           else ev.target.className = "red";
-          generateReport();
         };
         txm.appendChild(btn);
       }
@@ -36,10 +45,12 @@ function generateGrid(index) {
     container.appendChild(acab);
   }
 }
-  
+
 function generateReport() {
   var report = document.getElementById("report");
-  report.value = 'XXXXXXXXXX TxM Status Report on XXXXXX\n\n';
+  var date = new Date().toLocaleDateString('en-GB').split('/').join('');
+  date = date.substr(0, 4) + date.substr(6,8);
+  report.innerText = 'XXX TxM Status Report on ' + date + '\n\n';
   for (let i = 1; i <= NUM_ACAB; i++) {
     let text = '';
     let counter = 0;
@@ -61,14 +72,14 @@ function generateReport() {
        }
       if (txm_fail == true) text += "; ";
     }
- 
-  var pct = (counter / 256 * 100).toFixed(1);
-   text = "ACAB"+i+": " + counter + "/256 (" + pct + "%)\n" + text + "\n\n";
-   report.value += text;
-   }
-  report.value += '\nReport Link: ' + createLink(getUniqueString());
-  document.getElementById("copy").innerHTML = "copy text";
 
+  var pct = (counter / 256 * 100).toFixed(1);
+   let formmatted_text = "A"+i+": " + counter + "/256 (" + pct + "%)\n" + text + "\n";
+   if (text) formmatted_text += "\n";
+   report.innerText += formmatted_text;
+   }
+  document.getElementById("copy").innerHTML = "copy text";
+  createLink(getUniqueString());
 }
 
 function resetApp() {
@@ -85,9 +96,13 @@ function resetApp() {
 }
 
 function copyText(ev) {
-  let textarea = document.getElementById("report");
-  textarea.select();
+  let text = document.getElementById("report");
+  var range = document.createRange();
+  window.getSelection().removeAllRanges();
+  range.selectNode(text);
+  window.getSelection().addRange(range);
   document.execCommand("copy");
+  window.getSelection().removeAllRanges();
   ev.innerHTML = "Copied!";
 }
 
@@ -110,7 +125,7 @@ function getUniqueString() {
   var bools = [];
   for (let i = 1; i <= NUM_ACAB; i++) {
     for (let j = 1; j <= NUM_TXM; j++) {
-       for (let k = 1; k <= NUM_ELEM; k++) { 
+       for (let k = 1; k <= NUM_ELEM; k++) {
          let id = triplet_to_id(i, j, k);
          let elem = document.getElementById(id)
          bools.push(elem.className === 'red');
@@ -140,14 +155,18 @@ function setUniqueString() {
 
 function createLink(id) {
   let url = encodeURI('http://163inno.github.io/txm/?id=' + id);
-  let url_request = 'https://cutt.ly/api/api.php?key='+ API_KEY + '&short=' + url;
+  let url_request = 'https://api-ssl.bitly.com/v3/shorten?access_token='+ API_KEY + '&longUrl=' + url;
   var xhr = new XMLHttpRequest();
-  xhr.open('GET', url_request, false);
-  xhr.responseType = 'json';
-  alert('sent5: ' + url_request);
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState == 4)
+    {
+      let url = JSON.parse(xhr.responseText).data.url;
+      document.getElementById("report").innerText += "Report: " + url;
+    }
+  };
+  xhr.open('GET', url_request, true);
   xhr.send(null);
-  alert(xhr.responseText);
-  return xhr.responseText;
+  return;
 }
 
 // Array-of-bools to string converter
