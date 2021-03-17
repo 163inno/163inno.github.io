@@ -72,7 +72,7 @@ function generateReport() {
          }
        }
       if (txm_fail == true) text += "; ";
-      document.getElementById(i+"T"+j).style.backgroundColor = "#FF" + (16-2*elem_fails).toString(16).repeat(2) + "00";
+      document.getElementById(i+"T"+j).style.backgroundColor = "#FF" + (Math.max(16-4*elem_fails,0)).toString(16).repeat(2) + "00";
     }
 
   var pct = (counter / 256 * 100).toFixed(1);
