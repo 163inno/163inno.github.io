@@ -7,40 +7,43 @@ body {
   position: relative;
   font-family: helvetica;
   background-color: #F7F7FF;
-  font-size: 18px;
 }
 
 h1 {
-  font-size: 1em;
+  font-size: 4vh;
 }
 
 #wrapper {
    background-color: #BDD5EA;
    text-align: center;
-   font-size: 18px;
+   font-size: 3vw;
    font-weight: bold;
 }
 
 .ACAB {
   display: grid;
   grid-template-columns: repeat(8, 3fr) 1fr repeat(8, 3fr);
-  fonzt-size: 2vh;
 }
 
 .TxM {
    display: grid;
    background-color: #5D7083;
-   height: 35vh;
-   font-size: 2vh;
+   height: 50vw;
+   font-size: 3vw;
+}
+
+p {
+  font-size: 1.5vh;
 }
 
 #copy, #reset, #submit {
-    height: 5vh;
+    height: 7vh;
     width: 25vw;
     border: none;
     margin: 2px;
-    font-size: 3vh;
+    font-size: 4vh;
     background-color: #999999;
+    border-radius: 2vh;
 }
 
 .report-container {
@@ -63,21 +66,23 @@ textarea {
 }
 
 .green {
-  height: 4vh;
-  width: 1fr;
+  height: 5.8vw;
+  width: 5.8vw;
   margin: 0px;
   padding: 0px;
   font-weight: bold;
-  font-size: 2vh;
+  font-size: 3vw;
   background-color: #58eb34;
+  border-radius: 30%;
 }
 
 .red {
-    height: 4vh;
-    width: 1fr;
+    height: 5.8vw;
+    width: 5.8vw;
     margin: 0px;
     padding: 0px;
     font-weight: bold;
-    font-size: 18px;
+    font-size: 3vw;
     background-color: #a84432;
+    border-radius: 30%;
 }
