@@ -48,10 +48,6 @@ function generateGrid(index) {
 }
 
 function generateReport() {
-  var report = document.getElementById("report");
-  var date = new Date().toLocaleDateString('en-GB').split('/').join('');
-  date = date.substr(0, 4) + date.substr(6,8);
-  report.innerText = 'XXX TxM Status Report on ' + date + '\n\n';
   for (let i = 1; i <= NUM_ACAB; i++) {
     let text = '';
     let counter = 0;
