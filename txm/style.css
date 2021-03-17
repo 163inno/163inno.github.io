@@ -24,12 +24,14 @@ h1 {
 .ACAB {
   display: grid;
   grid-template-columns: repeat(8, 3fr) 1fr repeat(8, 3fr);
+  fonzt-size: 2vh;
 }
 
 .TxM {
    display: grid;
    background-color: #5D7083;
    height: 35vh;
+   font-size: 2vh;
 }
 
 #copy, #reset, #submit {
@@ -66,7 +68,7 @@ textarea {
   margin: 0px;
   padding: 0px;
   font-weight: bold;
-  font-size: 18px;
+  font-size: 2vh;
   background-color: #58eb34;
 }
 
