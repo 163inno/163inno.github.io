@@ -41,6 +41,7 @@ function generateGrid(index) {
         txm.appendChild(btn);
       }
       acab.appendChild(txm);
+      if (j==8 ||j==24) acab.appendChild(document.createElement("div"));
     }
     container.appendChild(acab);
   }

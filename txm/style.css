@@ -23,20 +23,21 @@ h1 {
 
 .ACAB {
   display: grid;
-  grid-template-columns: repeat(16, 1fr);
+  grid-template-columns: repeat(8, 3fr) 1fr repeat(8, 3fr);
 }
 
 .TxM {
    display: grid;
    background-color: #5D7083;
-   width: 1fr;
+   height: 45vh;
 }
 
 #copy, #reset, #submit {
-    height: 36px;
-    width: 80px;
+    height: 40px;
+    width: 150px;
     border: none;
     margin: 2px;
+    font-size: 20px;
     background-color: #999999;
 }
 
@@ -60,7 +61,7 @@ textarea {
 }
 
 .green {
-  height: 1fr;
+  height: 5vh;
   width: 1fr;
   margin: 0px;
   padding: 0px;
@@ -69,9 +70,8 @@ textarea {
   background-color: #58eb34;
 }
 
-
 .red {
-    height: 1fr;
+    height: 5vh;
     width: 1fr;
     margin: 0px;
     padding: 0px;
