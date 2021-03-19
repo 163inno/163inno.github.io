@@ -17,7 +17,7 @@ function generateGrid(index) {
 
   var container = document.getElementById("wrapper");
   for (let i = 1; i <= NUM_ACAB; i++) {
-    let t = document.createTextNode("ACAB "+i);
+    let t = document.createTextNode("A"+i);
     container.appendChild(t);
     var acab = document.createElement("div");
     acab.className = "ACAB";
