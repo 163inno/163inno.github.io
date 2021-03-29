@@ -70,7 +70,7 @@ textarea {
   margin: 0px;
   padding: 0px;
   font-weight: bold;
-  font-size: 3vw;
+  font-size: 5vw;
   background-color: #58eb34;
   border-radius: 30%;
 }
@@ -81,7 +81,7 @@ textarea {
     margin: 0px;
     padding: 0px;
     font-weight: bold;
-    font-size: 3vw;
+    font-size: 5vw;
     background-color: #a84432;
     border-radius: 30%;
 }
