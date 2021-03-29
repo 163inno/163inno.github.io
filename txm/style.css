@@ -23,12 +23,13 @@ h1 {
 .ACAB {
   display: grid;
   grid-template-columns: 1fr repeat(8, 3fr) 1fr;
+  font-size: 2vh;
 }
 
 .TxM {
    display: grid;
-   height: 100vw;
-   font-size: 3vw;
+   height: 95vw;
+   font-size: 2vh;
 }
 
 p {
