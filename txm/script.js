@@ -22,6 +22,7 @@ function generateGrid(index) {
     var acab = document.createElement("div");
     acab.className = "ACAB";
     for (let j = 1; j <= NUM_TXM; j++) {
+      if (j==1) acab.appendChild(document.createElement("div"));
       var txm = document.createElement("div");
       txm.id = i + "T"+j;
       let t = document.createTextNode("T"+j);
@@ -42,7 +43,11 @@ function generateGrid(index) {
         txm.appendChild(btn);
       }
       acab.appendChild(txm);
-      if (j==8 ||j==24) acab.appendChild(document.createElement("div"));
+      if (j==32) acab.appendChild(document.createElement("div"));
+      if (j==8 || j == 16 || j==24) {
+        acab.appendChild(document.createElement("div"));
+        acab.appendChild(document.createElement("div"));
+      }
     }
     container.appendChild(acab);
   }
