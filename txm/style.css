@@ -22,7 +22,7 @@ h1 {
 
 .ACAB {
   display: grid;
-  grid-template-columns: repeat(8, 3fr) 1fr repeat(8, 3fr);
+  grid-template-columns: 1fr repeat(8, 3fr) 1fr;
 }
 
 .TxM {
