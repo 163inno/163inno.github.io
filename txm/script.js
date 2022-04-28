@@ -3,6 +3,7 @@ const NUM_TXM = 32;
 const NUM_ELEM = 8;
 const API_KEY = '73f84f7dbe7b0f00feb9ca45876d5dd422137aaa';
 
+let MainBTN = window.Telegram.WebApp.MainButton;
 
 function generateGrid(index) {
   let report_bools = null;
@@ -88,6 +89,10 @@ function generateReport() {
    }
   document.getElementById("copy").innerHTML = "copy text";
   createLink(getUniqueString());
+  MainBTN.enable();
+  MainBTN.isVisible = true;
+  MainBTN.isActive = true;
+  MainBTN.text = "Generate Report"
 }
 
 function resetApp() {
