@@ -88,6 +88,7 @@ function generateReport() {
   document.getElementById("copy").innerHTML = "copy text";
   createLink(getUniqueString());
   configureMainButton({text: 'Generate Report', color: '#008000', onclick: mainButtonClickListener});
+  Telegram.WebApp.MainButton.show();
 }
 
 function mainButtonClickListener() {
