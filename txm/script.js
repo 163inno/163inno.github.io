@@ -92,7 +92,7 @@ function generateReport() {
   MainBTN.enable();
   MainBTN.isVisible = true;
   MainBTN.isActive = true;
-  MainBTN.text = "Generate Report"
+  MainBTN.text = "Generate Report";
 }
 
 function resetApp() {
