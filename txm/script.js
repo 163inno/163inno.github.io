@@ -3,6 +3,10 @@ const NUM_TXM = 32;
 const NUM_ELEM = 8;
 const API_KEY = '73f84f7dbe7b0f00feb9ca45876d5dd422137aaa';
 
+window.Telegram.WebApp.ready()
+configureMainButton({text: 'Generate Report', color: '#008000', onclick: mainButtonClickListener});
+window.Telegram.WebApp.MainButton.show();
+
 function generateGrid(index) {
   let report_bools = null;
   window.location.search
@@ -87,8 +91,6 @@ function generateReport() {
    }
   document.getElementById("copy").innerHTML = "copy text";
   createLink(getUniqueString());
-  configureMainButton({text: 'Generate Report', color: '#008000', onclick: mainButtonClickListener});
-  window.Telegram.WebApp.MainButton.show();
 }
 
 function mainButtonClickListener() {
