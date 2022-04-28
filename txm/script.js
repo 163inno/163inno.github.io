@@ -88,11 +88,11 @@ function generateReport() {
   document.getElementById("copy").innerHTML = "copy text";
   createLink(getUniqueString());
   configureMainButton({text: 'Generate Report', color: '#008000', onclick: mainButtonClickListener});
-  Telegram.WebApp.MainButton.show();
+  window.Telegram.WebApp.MainButton.show();
 }
 
 function mainButtonClickListener() {
-  Telegram.WebApp.close();
+  window.Telegram.WebApp.close();
 //    if (Telegram.WebApp.MainButton.text.toLowerCase() === 'view cart') {
 //        configureMainButton({text: 'close cart', color: '#FF0000', onclick: mainButtonClickListener});
 //    } else {
@@ -102,10 +102,10 @@ function mainButtonClickListener() {
 }
 
 function configureMainButton({text, color, textColor = '#ffffff', onclick}) {
-    Telegram.WebApp.MainButton.text = text.toUpperCase();
-    Telegram.WebApp.MainButton.color = color;
-    Telegram.WebApp.MainButton.textColor = textColor;
-    Telegram.WebApp.MainButton.onClick(onclick);
+    window.Telegram.WebApp.MainButton.text = text.toUpperCase();
+    window.Telegram.WebApp.MainButton.color = color;
+    window.Telegram.WebApp.MainButton.textColor = textColor;
+    window.Telegram.WebApp.MainButton.onClick(onclick);
 }
 
 
