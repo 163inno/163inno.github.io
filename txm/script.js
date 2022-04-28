@@ -3,8 +3,6 @@ const NUM_TXM = 32;
 const NUM_ELEM = 8;
 const API_KEY = '73f84f7dbe7b0f00feb9ca45876d5dd422137aaa';
 
-let MainBTN = window.Telegram.WebApp.MainButton;
-
 function generateGrid(index) {
   let report_bools = null;
   window.location.search
@@ -89,11 +87,26 @@ function generateReport() {
    }
   document.getElementById("copy").innerHTML = "copy text";
   createLink(getUniqueString());
-  MainBTN.enable();
-  MainBTN.isVisible = true;
-  MainBTN.isActive = true;
-  MainBTN.text = "Generate Report";
+  configureMainButton({text: 'Generate Report', color: '#008000', onclick: mainButtonClickListener});
 }
+
+function mainButtonClickListener() {
+  Telegram.WebApp.close();
+//    if (Telegram.WebApp.MainButton.text.toLowerCase() === 'view cart') {
+//        configureMainButton({text: 'close cart', color: '#FF0000', onclick: mainButtonClickListener});
+//    } else {
+//        configureMainButton({text: 'view cart', color: '#008000', onclick: mainButtonClickListener});
+//    }
+//    
+}
+
+function configureMainButton({text, color, textColor = '#ffffff', onclick}) {
+    Telegram.WebApp.MainButton.text = text.toUpperCase();
+    Telegram.WebApp.MainButton.color = color;
+    Telegram.WebApp.MainButton.textColor = textColor;
+    Telegram.WebApp.MainButton.onClick(onclick);
+}
+
 
 function resetApp() {
   for (let i = 1; i <= NUM_ACAB; i++) {
