@@ -99,11 +99,7 @@ function mainButtonClickListener() {
 //    generateReport();
     let text = document.getElementById("report").innerText;
     console.log(text);
-    let data = {
-      "data": text,
-      "button_text": "Export Report"
-    }
-    window.Telegram.WebApp.sendData(data);
+    window.Telegram.WebApp.sendData("TESTING 123");
 //  window.Telegram.WebApp.close();
 //    if (Telegram.WebApp.MainButton.text.toLowerCase() === 'view cart') {
 //        configureMainButton({text: 'close cart', color: '#FF0000', onclick: mainButtonClickListener});
