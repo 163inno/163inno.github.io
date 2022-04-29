@@ -103,7 +103,7 @@ function mainButtonClickListener() {
       "data": text,
       "button_text": "Export Report"
     }
-    window.Telegram.WebApp.SendData(data);
+    window.Telegram.WebApp.sendData(data);
 //  window.Telegram.WebApp.close();
 //    if (Telegram.WebApp.MainButton.text.toLowerCase() === 'view cart') {
 //        configureMainButton({text: 'close cart', color: '#FF0000', onclick: mainButtonClickListener});
