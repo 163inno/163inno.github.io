@@ -96,17 +96,7 @@ function generateReport() {
 }
 
 function mainButtonClickListener() {
-//    generateReport();
-//    let text = document.getElementById("report").innerText;
-//    console.log(text);
-    window.Telegram.WebApp.sendData("TESTING 123");
-//  window.Telegram.WebApp.close();
-//    if (Telegram.WebApp.MainButton.text.toLowerCase() === 'view cart') {
-//        configureMainButton({text: 'close cart', color: '#FF0000', onclick: mainButtonClickListener});
-//    } else {
-//        configureMainButton({text: 'view cart', color: '#008000', onclick: mainButtonClickListener});
-//    }
-//    
+    window.Telegram.WebApp.sendData(document.getElementById("report").innerText);
 }
 
 function configureMainButton({text, color, textColor = '#ffffff', onclick}) {
