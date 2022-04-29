@@ -91,12 +91,14 @@ function generateReport() {
    }
   document.getElementById("copy").innerHTML = "copy text";
   createLink(getUniqueString());
+  let text = report.innerText;
+    console.log(text);
 }
 
 function mainButtonClickListener() {
     generateReport();
-    let text = document.getElementById("report").innerText;
-    window.console.Log(text);
+    let text = report.innerText;
+    console.log(text);
     window.Telegram.WebApp.SendData(text);
 //  window.Telegram.WebApp.close();
 //    if (Telegram.WebApp.MainButton.text.toLowerCase() === 'view cart') {
