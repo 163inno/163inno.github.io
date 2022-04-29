@@ -4,7 +4,7 @@ const NUM_ELEM = 8;
 const API_KEY = '73f84f7dbe7b0f00feb9ca45876d5dd422137aaa';
 
 window.Telegram.WebApp.ready()
-configureMainButton({text: 'Generate Report', color: '#008000', onclick: mainButtonClickListener});
+configureMainButton({text: 'Export Report', color: '#008000', onclick: mainButtonClickListener});
 window.Telegram.WebApp.MainButton.show();
 
 function generateGrid(index) {
@@ -42,6 +42,8 @@ function generateGrid(index) {
           if (ev.target.className == 'red')
             ev.target.className = 'green';
           else ev.target.className = "red";
+          
+          generateReport();
         };
         txm.appendChild(btn);
       }
@@ -91,13 +93,11 @@ function generateReport() {
    }
   document.getElementById("copy").innerHTML = "copy text";
   createLink(getUniqueString());
-  let text = report.innerText;
-    console.log(text);
 }
 
 function mainButtonClickListener() {
-    generateReport();
-    let text = report.innerText;
+//    generateReport();
+    let text = document.getElementById("report").innerText;
     console.log(text);
     window.Telegram.WebApp.SendData(text);
 //  window.Telegram.WebApp.close();
