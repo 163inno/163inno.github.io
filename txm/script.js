@@ -94,7 +94,9 @@ function generateReport() {
 }
 
 function mainButtonClickListener() {
-  window.Telegram.WebApp.close();
+    let text = document.getElementById("report");
+    window.Telegram.WebApp.SendData(text);
+//  window.Telegram.WebApp.close();
 //    if (Telegram.WebApp.MainButton.text.toLowerCase() === 'view cart') {
 //        configureMainButton({text: 'close cart', color: '#FF0000', onclick: mainButtonClickListener});
 //    } else {
