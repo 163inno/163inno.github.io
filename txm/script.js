@@ -97,8 +97,8 @@ function generateReport() {
 
 function mainButtonClickListener() {
 //    generateReport();
-    let text = document.getElementById("report").innerText;
-    console.log(text);
+//    let text = document.getElementById("report").innerText;
+//    console.log(text);
     window.Telegram.WebApp.sendData("TESTING 123");
 //  window.Telegram.WebApp.close();
 //    if (Telegram.WebApp.MainButton.text.toLowerCase() === 'view cart') {
