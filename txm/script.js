@@ -94,7 +94,9 @@ function generateReport() {
 }
 
 function mainButtonClickListener() {
-    let text = document.getElementById("report");
+    generateReport();
+    let text = document.getElementById("report").innerText;
+    window.console.Log(text);
     window.Telegram.WebApp.SendData(text);
 //  window.Telegram.WebApp.close();
 //    if (Telegram.WebApp.MainButton.text.toLowerCase() === 'view cart') {
