@@ -48,6 +48,7 @@ p {
 
 .report-container {
   display: grid;
+  max-width: 50%;
   grid-template-columns: 3fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
   gap: 0px 0px;
