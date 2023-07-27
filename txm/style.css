@@ -3,7 +3,7 @@ html, body {
 }
 
 body {
-  margin: 0px;
+  /* margin: 0px; */
   position: relative;
   font-family: helvetica;
   background-color: #F7F7FF;
@@ -32,11 +32,11 @@ h1 {
    font-size: 2vh;
 }
 
-p {
+/* p {
   font-size: 1.5vh;
-}
+} */
 
-#copy, #reset, #submit {
+/* #copy, #reset, #submit {
     height: 7vh;
     width: 25vw;
     border: none;
@@ -44,9 +44,9 @@ p {
     font-size: 2.5vh;
     background-color: #999999;
     border-radius: 2vh;
-}
+} */
 
-.report-container {
+/* .report-container {
   display: grid;
   max-width: 50%;
   grid-template-columns: 3fr 1fr;
@@ -60,11 +60,11 @@ p {
 .Report { grid-area: Report; }
 .Reset { grid-area: Reset; }
 .Copy { grid-area: Copy; }
-.Code { grid-area: Code; }
+.Code { grid-area: Code; } */
 
-textarea {
+/* textarea {
   width: 100%;
-}
+} */
 
 .green {
   height: 11.5vw;
