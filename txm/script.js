@@ -180,7 +180,7 @@ function setUniqueString() {
 }
 
 function createLink(id) {
-  let url = encodeURI('http://163inno.github.io/txm/?id=' + id);
+  let url = 'http://163inno.github.io/txm/?id=' + id
   let url_request = 'https://api.tinyurl.com/create?api_token='+ API_KEY2;
   document.getElementById("report").innerText += "Visual Report: " + url;
   
