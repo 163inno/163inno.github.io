@@ -2,6 +2,7 @@ const NUM_ACAB = 4;
 const NUM_TXM = 32;
 const NUM_ELEM = 8;
 const API_KEY = '73f84f7dbe7b0f00feb9ca45876d5dd422137aaa';
+const API_KEY2 = '7smBOKVefRpsmbf4XFDxknMKSD2A789PuXPiWMxsNcQujBl0d58LeJyKyW93';
 
 window.Telegram.WebApp.ready()
 configureMainButton({text: 'Export Report', color: '#008000', onclick: mainButtonClickListener});
@@ -180,17 +181,31 @@ function setUniqueString() {
 
 function createLink(id) {
   let url = encodeURI('http://163inno.github.io/txm/?id=' + id);
-  let url_request = 'https://api-ssl.bitly.com/v3/shorten?access_token='+ API_KEY + '&longUrl=' + url;
-  var xhr = new XMLHttpRequest();
-  xhr.onreadystatechange = function () {
-    if (xhr.readyState == 4)
-    {
-      let url = JSON.parse(xhr.responseText).data.url;
-      document.getElementById("report").innerText += "Visual Report: " + url;
+  let url_request = 'https://api.tinyurl.com/create?api_token='+ API_KEY2;
+  // document.getElementById("report").innerText += "Visual Report: " + url;
+  const json = {
+    "url": url,
+    "domain": "tiny.one"
+  }
+
+  const options = {
+    method: 'POST',
+    body: JSON.stringify(json),
+    headers: {
+      'Content-Type':'application/json'
     }
-  };
-  xhr.open('GET', url_request, true);
-  xhr.send(null);
+  }
+
+  fetch(url_request, options)
+    .then(res => res.json())
+    .then(res => {
+      if(res.ok){
+        document.getElementById("report").innerText += "Visual Report: " + res.data.tiny_url;
+      }else{
+        document.getElementById("report").innerText += "Visual Report: ERROR! :(" ;
+        return
+      }
+    })
   return;
 }
 
