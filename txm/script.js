@@ -182,30 +182,8 @@ function setUniqueString() {
 function createLink(id) {
   let url = encodeURI('http://163inno.github.io/txm/?id=' + id);
   let url_request = 'https://api.tinyurl.com/create?api_token='+ API_KEY2;
-  // document.getElementById("report").innerText += "Visual Report: " + url;
-  const json = {
-    "url": url,
-    "domain": "tiny.one"
-  }
-
-  const options = {
-    method: 'POST',
-    body: JSON.stringify(json),
-    headers: {
-      'Content-Type':'application/json'
-    }
-  }
-
-  fetch(url_request, options)
-    .then(res => res.json())
-    .then(res => {
-      if(res.ok){
-        document.getElementById("report").innerText += "Visual Report: " + res.data.tiny_url;
-      }else{
-        document.getElementById("report").innerText += "Visual Report: ERROR! :(" ;
-        return
-      }
-    })
+  document.getElementById("report").innerText += "Visual Report: " + url;
+  
   return;
 }
 
