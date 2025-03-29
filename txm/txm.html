@@ -44,35 +44,34 @@
     const groups = 4, rowsPerGroup = 32, colsPerRow = 8, totalElements = groups * rowsPerGroup * colsPerRow;
     let backwardsCompat = false, state = [];
     const initState = () => { state = Array.from({ length: groups }, () => Array.from({ length: rowsPerGroup }, () => Array(colsPerRow).fill(false))); };
-    const toggleElement = (a,r,c) => { state[a][r][c] = !state[a][r][c]; updateElementUI(a,r,c); updateTRowUI(a,r); updateGroupHeader(a); updateURL(); };
-    const updateElementUI = (a,r,c) => { const el = document.getElementById(`elem-${a}-${r}-${c}`); if(el) el.classList.toggle("failed", state[a][r][c]); };
-    const updateTRowUI = (a,r) => {
-      let failed = 0; for(let c=0;c<colsPerRow;c++) if(state[a][r][c]) failed++;
+    const toggleElement = (a, r, c) => { state[a][r][c] = !state[a][r][c]; updateElementUI(a, r, c); updateTRowUI(a, r); updateGroupHeader(a); updateURL(); };
+    const updateElementUI = (a, r, c) => { const el = document.getElementById(`elem-${a}-${r}-${c}`); if(el) el.classList.toggle("failed", state[a][r][c]); };
+    const updateTRowUI = (a, r) => {
+      let failed = 0; for(let c=0; c<colsPerRow; c++) if(state[a][r][c]) failed++;
       const pct = Math.round(failed/colsPerRow*100);
       let color = pct<=50 ? `rgb(255,255,${Math.round(255-255*(pct/50))})` : `rgb(255,${Math.round(255-255*((pct-50)/50))},0)`;
       const tLabel = document.querySelector(`#trow-${a}-${r} .t-label`);
       if(tLabel){ tLabel.style.backgroundColor = color; tLabel.textContent = `T${r+1} (${pct}%)`; }
     };
     const updateGroupHeader = a => {
-      let count = 0; for(let r=0;r<rowsPerGroup;r++) for(let c=0;c<colsPerRow;c++) if(state[a][r][c]) count++;
-      const pct = Math.round(count/(rowsPerGroup*colsPerRow)*100);
+      let count = 0; for(let r=0; r<rowsPerGroup; r++) for(let c=0; c<colsPerRow; c++) if(state[a][r][c]) count++;
+      const pct = (count/(rowsPerGroup*colsPerRow)*100).toFixed(1);
       const header = document.querySelector(`.group-header[data-group="${a}"]`);
       if(header) header.textContent = `A${a+1}: ${count}/${rowsPerGroup*colsPerRow} (${pct}%)`;
     };
     const createUI = () => {
       const app = document.getElementById("app"); app.innerHTML = "";
-      for(let a=0;a<groups;a++){
-        const groupDiv = document.createElement("div");
-        groupDiv.className = "group";
-        groupDiv.innerHTML = `<div class="group-header" data-group="${a}">A${a+1}: 0/${rowsPerGroup*colsPerRow} (0%)</div>`;
+      for(let a=0; a<groups; a++){
+        const groupDiv = document.createElement("div"); groupDiv.className = "group";
+        groupDiv.innerHTML = `<div class="group-header" data-group="${a}">A${a+1}: 0/${rowsPerGroup*colsPerRow} (0.0%)</div>`;
         const tCont = document.createElement("div"); tCont.className = "t-container";
-        for(let r=0;r<rowsPerGroup;r++){
+        for(let r=0; r<rowsPerGroup; r++){
           const rowDiv = document.createElement("div"); rowDiv.className = "t-row"; rowDiv.id = `trow-${a}-${r}`;
           const tLabel = document.createElement("div"); tLabel.className = "t-label"; tLabel.textContent = `T${r+1} (0%)`;
           const eCont = document.createElement("div"); eCont.className = "elements-container";
-          for(let c=0;c<colsPerRow;c++){
+          for(let c=0; c<colsPerRow; c++){
             const el = document.createElement("div"); el.className = "element"; el.id = `elem-${a}-${r}-${c}`; el.textContent = `E${c+1}`;
-            el.addEventListener("click", () => toggleElement(a,r,c));
+            el.addEventListener("click", () => toggleElement(a, r, c));
             eCont.appendChild(el);
           }
           rowDiv.append(tLabel, eCont); tCont.appendChild(rowDiv);
@@ -86,31 +85,29 @@
       if(params.has("id")){
         backwardsCompat = true;
         const bools = expand(params.get("id")); let idx = 0;
-        for(let a=0;a<groups;a++) for(let r=0;r<rowsPerGroup;r++) for(let c=0;c<colsPerRow;c++) state[a][r][c] = bools[idx++];
+        for(let a=0; a<groups; a++) for(let r=0; r<rowsPerGroup; r++) for(let c=0; c<colsPerRow; c++) state[a][r][c] = bools[idx++];
       } else if(params.has("state")){
         let str = params.get("state").replace(/-/g,'+').replace(/_/g,'/');
         while(str.length % 4) str += '=';
-        const binStr = atob(str); if(binStr.length!==128)return;
-        const bytes = new Uint8Array(128); for(let i=0;i<128;i++) bytes[i] = binStr.charCodeAt(i);
-        let bitIdx = 0; 
-        for(let a=0;a<groups;a++) for(let r=0;r<rowsPerGroup;r++) for(let c=0;c<colsPerRow;c++){
-          const byteIdx = Math.floor(bitIdx/8), bitPos = 7 - (bitIdx % 8), bit = (bytes[byteIdx] >> bitPos) & 1;
-          state[a][r][c] = (bit === 1); bitIdx++;
+        const bin = atob(str); if(bin.length!==128)return;
+        const bytes = new Uint8Array(128); for(let i=0;i<128;i++) bytes[i] = bin.charCodeAt(i);
+        let bitIdx = 0; for(let a=0; a<groups; a++) for(let r=0; r<rowsPerGroup; r++) for(let c=0; c<colsPerRow; c++){
+          const bIdx = Math.floor(bitIdx/8), bPos = 7 - (bitIdx % 8), bit = (bytes[bIdx] >> bPos) & 1;
+          state[a][r][c] = (bit===1); bitIdx++;
         }
       }
     };
     const updateURL = () => {
       if(backwardsCompat){
-        const bools = []; for(let a=0;a<groups;a++) for(let r=0;r<rowsPerGroup;r++) for(let c=0;c<colsPerRow;c++) bools.push(state[a][r][c]);
-        const enc = bools.every(b=>!b) ? "0" : compress(bools);
+        const bools = []; for(let a=0; a<groups; a++) for(let r=0; r<rowsPerGroup; r++) for(let c=0; c<colsPerRow; c++) bools.push(state[a][r][c]);
+        const enc = bools.every(b => !b) ? "0" : compress(bools);
         window.history.replaceState(null, "", `${getBaseUrl()}?id=${enc}`);
       } else {
         const bytes = new Uint8Array(Math.ceil(totalElements/8));
-        let bitIdx = 0; 
-        for(let a=0;a<groups;a++) for(let r=0;r<rowsPerGroup;r++) for(let c=0;c<colsPerRow;c++){
+        let bitIdx = 0; for(let a=0; a<groups; a++) for(let r=0; r<rowsPerGroup; r++) for(let c=0; c<colsPerRow; c++){
           if(state[a][r][c]){
-            const byteIdx = Math.floor(bitIdx/8), bitPos = 7 - (bitIdx % 8);
-            bytes[byteIdx] |= (1 << bitPos);
+            const bIdx = Math.floor(bitIdx/8), bPos = 7 - (bitIdx % 8);
+            bytes[bIdx] |= (1 << bPos);
           }
           bitIdx++;
         }
@@ -122,7 +119,7 @@
     const groupConsecutive = arr => {
       if(!arr.length)return "";
       arr.sort((a,b)=>a-b);
-      let res=[], start = arr[0], end = arr[0];
+      let res=[], start=arr[0], end=arr[0];
       for(let i=1;i<arr.length;i++){
         if(arr[i]===end+1) end=arr[i]; else { res.push(start===end?`E${start}`:`E${start}-E${end}`); start=arr[i]; end=arr[i]; }
       }
@@ -132,21 +129,24 @@
     const exportReport = () => {
       const rptParts = [];
       for(let a=0;a<groups;a++){
-        const grpParts = [];
+        let total = 0, grpParts = [];
         for(let r=0;r<rowsPerGroup;r++){
           const failed = [];
           for(let c=0;c<colsPerRow;c++){
-            if(state[a][r][c]) failed.push(c+1);
+            if(state[a][r][c]) { failed.push(c+1); total++; }
           }
           if(failed.length) grpParts.push(`T${r+1}: ${groupConsecutive(failed)}`);
         }
-        if(grpParts.length) rptParts.push(`A${a+1}:\n${grpParts.join("; ")}`);
+        const pct = ((total/(rowsPerGroup*colsPerRow))*100).toFixed(1);
+        let grpReport = `A${a+1}: ${total}/${rowsPerGroup*colsPerRow} (${pct}%)`;
+        if(grpParts.length) grpReport += `\n${grpParts.join("; ")}`;
+        rptParts.push(grpReport);
       }
-      let report = rptParts.length ? rptParts.join("\n\n") : "All elements are servicable.";
-      report += `\n\nPermalink: ${window.location.href}`;
+      const report = rptParts.join("\n\n") + `\n\nPermalink: ${window.location.href}`;
       copyToClipboard(report);
       const msg = document.getElementById("message");
-      msg.style.display = "block"; msg.textContent = "Report copied to clipboard:\n\n" + report;
+      msg.style.display = "block";
+      msg.textContent = "Report copied to clipboard:\n\n" + report;
     };
     const copyToClipboard = text => { const ta = document.createElement("textarea"); ta.value = text; document.body.appendChild(ta); ta.select(); document.execCommand("copy"); document.body.removeChild(ta); };
     const confirmReset = () => {
@@ -154,7 +154,7 @@
       msg.style.display = "block";
       msg.innerHTML = 'Are you sure you want to reset all elements? <span class="confirm-buttons"><button id="confirmReset" class="btn btn-reset">Yes</button><button id="cancelReset" class="btn btn-export">No</button></span>';
       document.getElementById("confirmReset").addEventListener("click", () => {
-        initState(); createUI(); 
+        initState(); createUI();
         for(let a=0;a<groups;a++){ for(let r=0;r<rowsPerGroup;r++){ updateTRowUI(a,r); } updateGroupHeader(a); }
         updateURL(); msg.style.display = "none";
       });
@@ -163,12 +163,10 @@
     const convertBase = (value, from, to) => {
       const range = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_'.split('');
       const fromRange = range.slice(0, from), toRange = range.slice(0, to);
-      let dec = value.split('').reverse().reduce((carry,digit,idx)=> carry + fromRange.indexOf(digit)*Math.pow(from, idx), 0);
-      let newVal = "";
-      while(dec>0){ newVal = toRange[dec % to] + newVal; dec = Math.floor(dec / to); }
-      return newVal || '0';
+      let dec = value.split('').reverse().reduce((carry, digit, idx)=> carry + fromRange.indexOf(digit)*Math.pow(from, idx),0);
+      let newVal = ""; while(dec>0){ newVal = toRange[dec % to] + newVal; dec = Math.floor(dec/to); } return newVal || '0';
     };
-    const compress = bools => { if(bools.every(b=>!b)) return "0"; const MAX=52; let secs = []; for(let i=0;i<bools.length;i++){ if(i % MAX===0) secs.push([]); secs[Math.floor(i/MAX)][i % MAX] = bools[i] ? 1 : 0; } return secs.map(sec => convertBase("1"+sec.join(""), 2, 64)).join(""); };
+    const compress = bools => { if(bools.every(b=>!b)) return "0"; const MAX=52; let secs = []; for(let i=0;i<bools.length;i++){ if(i % MAX===0) secs.push([]); secs[Math.floor(i/MAX)][i % MAX] = bools[i] ? 1 : 0; } return secs.map(sec => convertBase("1"+sec.join(""),2,64)).join(""); };
     const expand = str => { let secs = []; while(str.length>0){ secs.push(str.substring(0,9)); str = str.substring(9); } secs = secs.map(s=> convertBase(s,64,2).substring(1)); return secs.join("").split("").map(ch=> ch==="1"); };
     initState(); createUI(); loadStateFromURL();
     for(let a=0;a<groups;a++){ for(let r=0;r<rowsPerGroup;r++){ for(let c=0;c<colsPerRow;c++) updateElementUI(a,r,c); updateTRowUI(a,r); } updateGroupHeader(a); }
