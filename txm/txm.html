@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Serviceability Checker</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; margin:5px; padding:0; background:#e8edf3; display:flex; flex-direction:column; min-height:100vh; }
+    #app { width:100%; }
+    .header { display:flex; justify-content:space-between; align-items:center; margin-bottom:5px; }
+    .btn { width:120px; height:48px; margin:3px; border:none; border-radius:4px; cursor:pointer; font-size:16px; }
+    .btn-export { background:#2196F3; color:#fff; }
+    .btn-reset { background:#f44336; color:#fff; }
+    .instructions { font-size:12px; margin-bottom:5px; text-align:center; }
+    .group { background:#fff; padding:8px; border-radius:4px; box-shadow:0 0 3px rgba(0,0,0,0.1); margin-bottom:8px; width:100%; }
+    .group-header { font-weight:bold; font-size:18px; text-align:center; padding-bottom:4px; border-bottom:1px solid #ccc; margin-bottom:6px; }
+    .t-container { display:grid; gap:2px; width:100%; grid-template-columns:1fr; }
+    @media (min-width:600px) { .t-container { grid-auto-flow: column; grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(16, auto); } }
+    .t-row { display:grid; grid-template-columns: 50px 1fr; gap:2px; border:1px solid #ddd; border-radius:4px; padding:2px; margin-bottom:2px; width:100%; }
+    .t-label { width:50px; height:40px; line-height:40px; font-size:10px; font-weight:bold; text-align:center; border-radius:4px; overflow:hidden; white-space:nowrap; }
+    .elements-container { display:grid; grid-template-columns: repeat(8, minmax(30px,40px)); grid-auto-rows:40px; gap:2px; overflow:hidden; }
+    .element { width:40px; height:40px; display:flex; justify-content:center; align-items:center; border-radius:4px; background:#4CAF50; cursor:pointer; font-size:12px; color:#fff; border:1px solid #fff; }
+    .failed { background:#F44336; }
+    #message { margin:5px 0; padding:5px; font-size:12px; background:#e0e0e0; border-radius:4px; display:none; white-space:pre-wrap; }
+    .confirm-buttons { margin-top:5px; }
+    .confirm-buttons .btn { margin:2px; }
+    footer { font-size:10px; text-align:center; margin-top:auto; padding:5px 0; color:#555; line-height:1.4; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <button id="exportBtn" class="btn btn-export">Export/Share</button>
+    <button id="resetBtn" class="btn btn-reset">Reset</button>
+  </div>
+  <div id="message"></div>
+  <div class="instructions">Tap an element to toggle its status. Green = servicable; red = failed.</div>
+  <div id="app"></div>
+  <footer>
+    created by rubik for 163 inno team<br>
+    this app is compliant with current security standards. no data is stored on this website.
+  </footer>
+  <script>
+    const groups = 4, rowsPerGroup = 32, colsPerRow = 8, totalElements = groups * rowsPerGroup * colsPerRow;
+    let backwardsCompat = false, state = [];
+    const initState = () => { state = Array.from({ length: groups }, () => Array.from({ length: rowsPerGroup }, () => Array(colsPerRow).fill(false))); };
+    const toggleElement = (a,r,c) => { state[a][r][c] = !state[a][r][c]; updateElementUI(a,r,c); updateTRowUI(a,r); updateGroupHeader(a); updateURL(); };
+    const updateElementUI = (a,r,c) => { const el = document.getElementById(`elem-${a}-${r}-${c}`); if(el) el.classList.toggle("failed", state[a][r][c]); };
+    const updateTRowUI = (a,r) => {
+      let failed = 0; for(let c=0;c<colsPerRow;c++) if(state[a][r][c]) failed++;
+      const pct = Math.round(failed/colsPerRow*100);
+      let color = pct<=50 ? `rgb(255,255,${Math.round(255-255*(pct/50))})` : `rgb(255,${Math.round(255-255*((pct-50)/50))},0)`;
+      const tLabel = document.querySelector(`#trow-${a}-${r} .t-label`);
+      if(tLabel){ tLabel.style.backgroundColor = color; tLabel.textContent = `T${r+1} (${pct}%)`; }
+    };
+    const updateGroupHeader = a => {
+      let count = 0; for(let r=0;r<rowsPerGroup;r++) for(let c=0;c<colsPerRow;c++) if(state[a][r][c]) count++;
+      const pct = Math.round(count/(rowsPerGroup*colsPerRow)*100);
+      const header = document.querySelector(`.group-header[data-group="${a}"]`);
+      if(header) header.textContent = `A${a+1}: ${count}/${rowsPerGroup*colsPerRow} (${pct}%)`;
+    };
+    const createUI = () => {
+      const app = document.getElementById("app"); app.innerHTML = "";
+      for(let a=0;a<groups;a++){
+        const groupDiv = document.createElement("div");
+        groupDiv.className = "group";
+        groupDiv.innerHTML = `<div class="group-header" data-group="${a}">A${a+1}: 0/${rowsPerGroup*colsPerRow} (0%)</div>`;
+        const tCont = document.createElement("div"); tCont.className = "t-container";
+        for(let r=0;r<rowsPerGroup;r++){
+          const rowDiv = document.createElement("div"); rowDiv.className = "t-row"; rowDiv.id = `trow-${a}-${r}`;
+          const tLabel = document.createElement("div"); tLabel.className = "t-label"; tLabel.textContent = `T${r+1} (0%)`;
+          const eCont = document.createElement("div"); eCont.className = "elements-container";
+          for(let c=0;c<colsPerRow;c++){
+            const el = document.createElement("div"); el.className = "element"; el.id = `elem-${a}-${r}-${c}`; el.textContent = `E${c+1}`;
+            el.addEventListener("click", () => toggleElement(a,r,c));
+            eCont.appendChild(el);
+          }
+          rowDiv.append(tLabel, eCont); tCont.appendChild(rowDiv);
+        }
+        groupDiv.appendChild(tCont); app.appendChild(groupDiv);
+      }
+    };
+    const getBaseUrl = () => `${window.location.origin}${window.location.pathname}`;
+    const loadStateFromURL = () => {
+      const params = new URLSearchParams(window.location.search);
+      if(params.has("id")){
+        backwardsCompat = true;
+        const bools = expand(params.get("id")); let idx = 0;
+        for(let a=0;a<groups;a++) for(let r=0;r<rowsPerGroup;r++) for(let c=0;c<colsPerRow;c++) state[a][r][c] = bools[idx++];
+      } else if(params.has("state")){
+        let str = params.get("state").replace(/-/g,'+').replace(/_/g,'/');
+        while(str.length % 4) str += '=';
+        const binStr = atob(str); if(binStr.length!==128)return;
+        const bytes = new Uint8Array(128); for(let i=0;i<128;i++) bytes[i] = binStr.charCodeAt(i);
+        let bitIdx = 0; 
+        for(let a=0;a<groups;a++) for(let r=0;r<rowsPerGroup;r++) for(let c=0;c<colsPerRow;c++){
+          const byteIdx = Math.floor(bitIdx/8), bitPos = 7 - (bitIdx % 8), bit = (bytes[byteIdx] >> bitPos) & 1;
+          state[a][r][c] = (bit === 1); bitIdx++;
+        }
+      }
+    };
+    const updateURL = () => {
+      if(backwardsCompat){
+        const bools = []; for(let a=0;a<groups;a++) for(let r=0;r<rowsPerGroup;r++) for(let c=0;c<colsPerRow;c++) bools.push(state[a][r][c]);
+        const enc = bools.every(b=>!b) ? "0" : compress(bools);
+        window.history.replaceState(null, "", `${getBaseUrl()}?id=${enc}`);
+      } else {
+        const bytes = new Uint8Array(Math.ceil(totalElements/8));
+        let bitIdx = 0; 
+        for(let a=0;a<groups;a++) for(let r=0;r<rowsPerGroup;r++) for(let c=0;c<colsPerRow;c++){
+          if(state[a][r][c]){
+            const byteIdx = Math.floor(bitIdx/8), bitPos = 7 - (bitIdx % 8);
+            bytes[byteIdx] |= (1 << bitPos);
+          }
+          bitIdx++;
+        }
+        let binStr = ""; for(let i=0;i<bytes.length;i++) binStr += String.fromCharCode(bytes[i]);
+        let b64 = btoa(binStr).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+        window.history.replaceState(null, "", `${getBaseUrl()}?state=${b64}`);
+      }
+    };
+    const groupConsecutive = arr => {
+      if(!arr.length)return "";
+      arr.sort((a,b)=>a-b);
+      let res=[], start = arr[0], end = arr[0];
+      for(let i=1;i<arr.length;i++){
+        if(arr[i]===end+1) end=arr[i]; else { res.push(start===end?`E${start}`:`E${start}-E${end}`); start=arr[i]; end=arr[i]; }
+      }
+      res.push(start===end?`E${start}`:`E${start}-E${end}`);
+      return res.join(", ");
+    };
+    const exportReport = () => {
+      const rptParts = [];
+      for(let a=0;a<groups;a++){
+        const grpParts = [];
+        for(let r=0;r<rowsPerGroup;r++){
+          const failed = [];
+          for(let c=0;c<colsPerRow;c++){
+            if(state[a][r][c]) failed.push(c+1);
+          }
+          if(failed.length) grpParts.push(`T${r+1}: ${groupConsecutive(failed)}`);
+        }
+        if(grpParts.length) rptParts.push(`A${a+1}:\n${grpParts.join("; ")}`);
+      }
+      let report = rptParts.length ? rptParts.join("\n\n") : "All elements are servicable.";
+      report += `\n\nPermalink: ${window.location.href}`;
+      copyToClipboard(report);
+      const msg = document.getElementById("message");
+      msg.style.display = "block"; msg.textContent = "Report copied to clipboard:\n\n" + report;
+    };
+    const copyToClipboard = text => { const ta = document.createElement("textarea"); ta.value = text; document.body.appendChild(ta); ta.select(); document.execCommand("copy"); document.body.removeChild(ta); };
+    const confirmReset = () => {
+      const msg = document.getElementById("message");
+      msg.style.display = "block";
+      msg.innerHTML = 'Are you sure you want to reset all elements? <span class="confirm-buttons"><button id="confirmReset" class="btn btn-reset">Yes</button><button id="cancelReset" class="btn btn-export">No</button></span>';
+      document.getElementById("confirmReset").addEventListener("click", () => {
+        initState(); createUI(); 
+        for(let a=0;a<groups;a++){ for(let r=0;r<rowsPerGroup;r++){ updateTRowUI(a,r); } updateGroupHeader(a); }
+        updateURL(); msg.style.display = "none";
+      });
+      document.getElementById("cancelReset").addEventListener("click", () => msg.style.display = "none");
+    };
+    const convertBase = (value, from, to) => {
+      const range = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_'.split('');
+      const fromRange = range.slice(0, from), toRange = range.slice(0, to);
+      let dec = value.split('').reverse().reduce((carry,digit,idx)=> carry + fromRange.indexOf(digit)*Math.pow(from, idx), 0);
+      let newVal = "";
+      while(dec>0){ newVal = toRange[dec % to] + newVal; dec = Math.floor(dec / to); }
+      return newVal || '0';
+    };
+    const compress = bools => { if(bools.every(b=>!b)) return "0"; const MAX=52; let secs = []; for(let i=0;i<bools.length;i++){ if(i % MAX===0) secs.push([]); secs[Math.floor(i/MAX)][i % MAX] = bools[i] ? 1 : 0; } return secs.map(sec => convertBase("1"+sec.join(""), 2, 64)).join(""); };
+    const expand = str => { let secs = []; while(str.length>0){ secs.push(str.substring(0,9)); str = str.substring(9); } secs = secs.map(s=> convertBase(s,64,2).substring(1)); return secs.join("").split("").map(ch=> ch==="1"); };
+    initState(); createUI(); loadStateFromURL();
+    for(let a=0;a<groups;a++){ for(let r=0;r<rowsPerGroup;r++){ for(let c=0;c<colsPerRow;c++) updateElementUI(a,r,c); updateTRowUI(a,r); } updateGroupHeader(a); }
+    document.getElementById("exportBtn").addEventListener("click", exportReport);
+    document.getElementById("resetBtn").addEventListener("click", confirmReset);
+  </script>
+</body>
+</html>
