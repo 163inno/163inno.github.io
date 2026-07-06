@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LIVE Lightning Risk Map (CAT 1)</title>
+
+<!-- Open Graph (Discord, WhatsApp, Facebook, LinkedIn, Telegram, iMessage) -->
+<meta property="og:title" content="LIVE Lightning Risk Map (CAT 1)">
+<meta property="og:description" content="Live updating CAT 1 lightning risk map with rain areas">
+<meta property="og:type" content="website">
+
+<!-- Twitter Card (also picked up by some other platforms) -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="LIVE Lightning Risk Map (CAT 1)">
+<meta name="twitter:description" content="Live updating CAT 1 lightning risk map with rain areas">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="rain-banner" role="alert">
+  <span id="rain-banner-text"></span>
+  <button class="close-btn" id="rain-banner-close" aria-label="Dismiss">&times;</button>
+</div>
+<div id="map"></div>
+
+<div id="error-backdrop" role="alertdialog" aria-labelledby="error-title" aria-modal="true">
+  <div id="error-modal">
+    <button id="error-close" aria-label="Close">&times;</button>
+    <h2 id="error-title">Map temporarily unavailable</h2>
+    <p style="margin:0;">
+      Dear users, this map is temporarily unavailable &mdash; either the SafeGuardian app or my server is down. We seek your kind understanding and patience. Thank you.
+    </p>
+  </div>
+</div>
+
+<div id="credits-backdrop" role="dialog" aria-labelledby="credits-title" aria-modal="true">
+  <div id="credits-modal">
+    <button id="credits-close" aria-label="Close">&times;</button>
+    <h2 id="credits-title">Lightning risk levels</h2>
+    <div class="row">
+      <div style="border-left:4px solid #2ecc71; padding:4px 0 4px 8px; margin-bottom:5px;">
+        <strong>CAT 3:</strong> Outdoor activities are allowed.
+      </div>
+      <div style="border-left:4px solid #fff200; padding:4px 0 4px 8px; margin-bottom:5px;">
+        <strong>CAT 2:</strong> Outdoor activities to be decided by conducting structure.
+      </div>
+      <div style="border-left:4px solid #b03020; padding:4px 0 4px 8px;">
+        <strong>CAT 1:</strong> Heavy rain and/or lightning risk. Outdoor activities are <strong>NOT ALLOWED</strong>.
+      </div>
+    </div>
+    <h2 style="font-size:17px; margin:18px 0 12px;">Credits</h2>
+    <div class="row">
+      <div class="label">CAT status data</div>
+      <a href="https://safeguardian.defence.gov.sg/" target="_blank" rel="noopener">SafeGuardian</a>
+      <div class="app-badges">
+        <a class="app-badge" href="https://apps.apple.com/sg/app/safeguardian/id1558990521" target="_blank" rel="noopener">App Store</a>
+        <a class="app-badge" href="https://play.google.com/store/apps/details?id=sg.mindef.ns.safeguardian" target="_blank" rel="noopener">Google Play</a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="label">Rain areas &amp; weather alerts</div>
+      <a href="https://www.nea.gov.sg/weather/rain-areas" target="_blank" rel="noopener">National Environment Agency</a>
+    </div>
+    <div class="row">
+      <div class="label">Basemaps</div>
+      <a href="https://www.openstreetmap.org/" target="_blank" rel="noopener">OpenStreetMap</a>, <a href="https://www.onemap.gov.sg/" target="_blank" rel="noopener">OneMap</a> (<a href="https://www.sla.gov.sg/" target="_blank" rel="noopener">Singapore Land Authority</a>)
+    </div>
+    <div class="row" style="border-top:1px solid #eee; padding-top:12px;">
+      <span style="font-weight:600;">Created by <a href="/">Andrew Lee</a></span> | <a href="https://github.com/ajlee2006/apps.andewmole.com/tree/main/cat1" target="_blank" rel="noopener">Source code (GitHub)</a>
+    </div>
+    <div class="row" style="border-top:1px solid #eee; padding-top:12px;">
+      <span style="font-weight:600;">Modified by <a href="/">Seeker</a></span> 
+  </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="app.js"></script>
+</body>
+</html>
