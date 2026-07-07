@@ -43,6 +43,91 @@ const LABEL_POSITIONS = {
     "19S": [1.390389, 104.059575]
 };
 
+const WBGTLocations = [
+  { name: "MacRitchie Reservoir", latitude: 1.3418179, longitude: 103.833913 },
+  { name: "MOE (Evans) Stadium", latitude: 1.321182, longitude: 103.819737 },
+  { name: "Rifle Range Road Camp", latitude: 1.35446, longitude: 103.788 },
+  { name: "Mandai West Camp", latitude: 1.35446, longitude: 103.788 },
+  { name: "Bishan Stadium", latitude: 1.354825, longitude: 103.852219 },
+  { name: "Coronation Road", latitude: 1.322505, longitude: 103.80139 },
+  { name: "Yio Chu Kang Stadium", latitude: 1.382564, longitude: 103.84619 },
+  { name: "Maju Camp", latitude: 1.3304, longitude: 103.77 },
+  { name: "Nee Soon Camp", latitude: 1.40909, longitude: 103.815 },
+  { name: "Clementi Camp", latitude: 1.33121, longitude: 103.762 },
+  { name: "Bukit Panjang/Hillview Camp/Gombak Base", latitude: 1.3745, longitude: 103.759 },
+  { name: "Mandai Wildlife Reserve", latitude: 1.4084245, longitude: 103.7808629 },
+  { name: "Bukit Batok Swimming Complex", latitude: 1.344712, longitude: 103.749077 },
+  { name: "Hong Lim Park", latitude: 1.286011, longitude: 103.846988 },
+  { name: "Dieppe Barracks/Khatib Camp", latitude: 1.42376, longitude: 103.825 },
+  { name: "Kallang Practice Track", latitude: 1.305738, longitude: 103.878174 },
+  { name: "Mandai Hill Camp", latitude: 1.40922, longitude: 103.77 },
+  { name: "Stagmont Camp", latitude: 1.38586, longitude: 103.751 },
+  { name: "Choa Chu Kang Stadium", latitude: 1.390524, longitude: 103.749664 },
+  { name: "Seletar Camp", latitude: 1.41238, longitude: 103.876 },
+  { name: "Sengkang East Avenue", latitude: 1.382559, longitude: 103.898525 },
+  { name: "Marina Barrage", latitude: 1.280001, longitude: 103.8697302 },
+  { name: "Woodlands Stadium", latitude: 1.433789, longitude: 103.780731 },
+  { name: "Mowbray/Kranji Camp II and III", latitude: 1.40012, longitude: 103.743 },
+  { name: "Old Choa Chu Kang Road", latitude: 1.372566, longitude: 103.724358 },
+  { name: "Palawan Green (Sentosa)", latitude: 1.24950363476734, longitude: 103.819177652546 },
+  { name: "Taman Jurong Greens", latitude: 1.3370108, longitude: 103.7182835 },
+  { name: "Punggol North", latitude: 1.41046864267577, longitude: 103.904965342662 },
+  { name: "Keat Hong Camp", latitude: 1.37111, longitude: 103.718 },
+  { name: "Tengah Airbase (South)", latitude: 1.37445, longitude: 103.712 },
+  { name: "Sembawang Camp", latitude: 1.4671, longitude: 103.814 },
+  { name: "Tampines Central Park", latitude: 1.353834, longitude: 103.938823 },
+  { name: "Pasir Ris Camp", latitude: 1.39379, longitude: 103.934 },
+  { name: "Bedok Stadium", latitude: 1.325746, longitude: 103.939691 },
+  { name: "Jurong West Stadium", latitude: 1.337859, longitude: 103.695383 },
+  { name: "Jalan Bahar", latitude: 1.365386, longitude: 103.692372 },
+  { name: "Tengah Airbase (North)", latitude: 1.40006, longitude: 103.701 },
+  { name: "Outward Bound Singapore(Pulau ubin)", latitude: 1.4214527, longitude: 103.9299001 },
+  { name: "Jurong Camp I and II", latitude: 1.33417, longitude: 103.688 },
+  { name: "Changi Airbase (East)", latitude: 1.33417, longitude: 103.688 },
+  { name: "Changi Airbase (West)", latitude: 1.33417, longitude: 103.688 },
+  { name: "Chong Pang Camp", latitude: 1.33417, longitude: 103.688 },
+  { name: "Choa Chu Kang Camp", latitude: 1.33417, longitude: 103.688 },
+  { name: "Lim Chu Kang Camp I/II", latitude: 1.33417, longitude: 103.688 },
+  { name: "Sembawang Airbase", latitude: 1.33417, longitude: 103.688 },
+  { name: "TP 2E/TP 2", latitude: 1.33417, longitude: 103.688 },
+  { name: "C", latitude: 1.33417, longitude: 103.688 },
+  { name: "D2/D3/MUTF", latitude: 1.33417, longitude: 103.688 },
+  { name: "MA 8 - Upper Mandai", latitude: 1.33417, longitude: 103.688 },
+  { name: "MA 8 - Lower Mandai", latitude: 1.33417, longitude: 103.688 },
+  { name: "TP 9 - Zone 2", latitude: 1.33417, longitude: 103.688 },
+  { name: "TP 9 - Zone 5 (West)", latitude: 1.33417, longitude: 103.688 },
+  { name: "TP 9 - Sector A/Zone 1", latitude: 1.33417, longitude: 103.688 },
+  { name: "TP 9 - Zone 5 (East)", latitude: 1.33417, longitude: 103.688 },
+  { name: "TP 9 - Zone 3", latitude: 1.33417, longitude: 103.688 },
+  { name: "TP 5E", latitude: 1.33417, longitude: 103.688 },
+  { name: "TP 4", latitude: 1.33417, longitude: 103.688 },
+  { name: "TP 7", latitude: 1.33417, longitude: 103.688 },
+  { name: "TP 6W/TP 6", latitude: 1.33417, longitude: 103.688 },
+  { name: "TP 11", latitude: 1.33417, longitude: 103.688 },
+  { name: "TP 12/TP 16", latitude: 1.33417, longitude: 103.688 },
+  { name: "TP 8", latitude: 1.42317, longitude: 103.703 },
+  { name: "SAFTI-MI", latitude: 1.33277, longitude: 103.684 },
+  { name: "TP 2N/SAFTI City", latitude: 1.37215, longitude: 103.683 },
+  { name: "Bedok Camp", latitude: 1.31705, longitude: 103.955 },
+  { name: "B", latitude: 1.35886, longitude: 103.68 },
+  { name: "Sungei Gedong Camp", latitude: 1.41928, longitude: 103.693 },
+  { name: "MA 2", latitude: 1.43384, longitude: 103.7 },
+  { name: "Pasir Ris Walk", latitude: 1.3715018, longitude: 103.9642012 },
+  { name: "Pasir Laba Camp", latitude: 1.33496, longitude: 103.674 },
+  { name: "D1/E/TP F (N)/TP F (S)/TP 8 - Area E", latitude: 1.41671, longitude: 103.687 },
+  { name: "Sakra Road (Jurong Island)", latitude: 1.2571, longitude: 103.698 },
+  { name: "Selarang Camp", latitude: 1.37177, longitude: 103.974 },
+  { name: "TP 1/A3/A4/A5", latitude: 1.33983, longitude: 103.664 },
+  { name: "Hendon Camp", latitude: 1.38705, longitude: 103.979 },
+  { name: "Changi Meteorological Station", latitude: 1.36777, longitude: 103.982262 },
+  { name: "Tuas Naval Base", latitude: 1.2937, longitude: 103.664 },
+  { name: "A1/A2", latitude: 1.35522, longitude: 103.642 },
+  { name: "Changi Naval Base", latitude: 1.32136, longitude: 104.025 },
+  { name: "Tekong (Ladang Camp)", latitude: 1.40657, longitude: 104.034 },
+  { name: "Tuas Terminal Gateway", latitude: 1.263757, longitude: 103.616417 },
+  { name: "Tekong (Rocky Hill Camp)/TP 9 - Zone 4", latitude: 1.39832, longitude: 104.048 },
+];
+
 // =============================================================
 // EDIT BELOW: Mouseover text shown when hovering each sector.
 // Plain text or basic HTML; "\n" creates a new line.
@@ -164,7 +249,7 @@ function updateSwitchPreview(div) {
   div.querySelector('.label').textContent = BASEMAPS[next].label;
   div.title = 'Switch to ' + BASEMAPS[next].label;
 }
-map.addControl(new BasemapSwitch());
+// map.addControl(new BasemapSwitch());
 
 // =============================================================
 // Info button (top-right) opens the credits modal.
@@ -260,11 +345,19 @@ legend.onAdd = function () {
   div.innerHTML =
     '<div id="colours-loading">Loading&hellip;</div>' +
     '<div id="colours-body" style="display:none;">' +
-      '<div><span class="swatch" style="background:#2ecc71"></span>CAT 3</div>' +
-      '<div><span class="swatch" style="background:#fff200"></span>CAT 2</div>' +
-      '<div><span class="swatch" style="background:#ff8c00"></span>CAT 1 incoming</div>' +
-      '<div><span class="swatch" style="background:#b03020"></span>CAT 1</div>' +
+      // '<div id="cat-toggle-row" class="toggle-row" style="display:none;">' +
+      //   '<label class="switch">' +
+      //     '<input type="checkbox" id="cat-toggle" checked>' +
+      //     '<span class="slider"></span>' +
+      //   '</label>' +
+      //   '<label for="cat-toggle">CAT areas</label>' +
+      // '</div>' +
+      '<div><span class="swatch" style="background:#2ecc71;opacity:0.5"></span>CAT 3</div>' +
+      '<div><span class="swatch" style="background:#fff200;opacity:0.5"></span>CAT 2</div>' +
+      '<div><span class="swatch" style="background:#ff8c00;opacity:0.5"></span>CAT 1 incoming</div>' +
+      '<div><span class="swatch" style="background:#b03020;opacity:0.5"></span>CAT 1</div>' +
       '<div><span class="swatch" style="background:#b03020;opacity:0.2"></span>Pending CAT clear</div>' +
+      '<div id="legend-timestamps" style="margin-top:6px;padding-top:6px;border-top:1px solid #ccc;font-size:11px;color:#555;">Updated &mdash; | Refreshed &mdash;</div>'+
     '</div>' +
     '<div id="rain-loading" class="toggle-row">Loading&hellip;</div>' +
     '<div id="rain-toggle-row" class="toggle-row" style="display:none;">' +
@@ -274,13 +367,15 @@ legend.onAdd = function () {
       '</label>' +
       '<label for="rain-toggle">Rain areas</label>' +
       '<span id="rain-time" class="rain-time"></span>' +
-    '</div>' +
-    '<div id="legend-timestamps" style="margin-top:6px;padding-top:6px;border-top:1px solid #ccc;font-size:11px;color:#555;">Updated &mdash; | Refreshed &mdash;</div>';
+    '</div>' ;
+    
   // stop clicks on the checkbox from propagating to the map
   L.DomEvent.disableClickPropagation(div);
   return div;
 };
 legend.addTo(map);
+
+let catEnabled = true;
 
 var colours = {};
 var tooltips = {};
@@ -297,6 +392,9 @@ var latestUpdateTime = null;   // set by parseApiResponse from the API's update_
 function applyColours() {
   Object.assign(CAT_INFO, catInfo || {});
 
+  if(!catEnabled)
+    return;
+  
   const newColours = {};
   const newTooltips = {};
   const currentTime = new Date();
@@ -306,6 +404,7 @@ function applyColours() {
     const startTime = CAT_INFO[name][1];
     const endTime = CAT_INFO[name][2];
     const updateTime = CAT_INFO[name][3];
+    const psi = CAT_INFO[name][4];
     //console.log(name,raw,formatTime(currentTime),formatTime(startTime),formatTime(endTime),formatTime(updateTime));
     if (raw == '1') {
       // Compare rounded down to the minute so transitions happen on the
@@ -314,14 +413,14 @@ function applyColours() {
       const startMin = Math.floor(startTime.getTime() / 60000);
       const endMin = Math.floor(endTime.getTime() / 60000);
       if (nowMin >= startMin) {
-        raw = '0';
+        raw = '0'; // CAT 1
         if (nowMin > endMin) {
-          raw = '-1';
+          raw = '-1'; // CAT 1 Pending clear
         }
       }
     }
     newColours[name] = STATUS_TO_COLOUR[raw];
-    newTooltips[name] = "Sector " + name + "<br>CAT " + CAT_INFO[name][0] + " (" + formatTime(startTime) + "-" + formatTime(endTime) + ")<br>Updated " + formatTime(updateTime);
+    newTooltips[name] = "Sector " + name + "<br>CAT " + CAT_INFO[name][0] + " (" + formatTime(startTime) + "H-" + formatTime(endTime) + "H)<br>PSI: " + psi + "<br>Updated " + formatTime(updateTime)+"H";
   }
 
   colours = newColours;
@@ -359,6 +458,38 @@ function applyColours() {
   }
 }
 
+// Wire up the toggle
+// const catToggle = document.getElementById('cat-toggle');
+// if (catToggle) {
+//   catToggle.addEventListener('change', f => {
+//     catEnabled = f.target.checked;
+//     if (catEnabled) {
+//       refreshColours();
+//     } else {
+//       // Reset all polygons to grey when CAT is disabled.
+//       for (const name in (colours || {})) {
+//           const polys = polygonsByName[name];
+//           if (!polys) continue;
+//           const style = styleFor(name);
+//           polys.forEach(p => {
+//             p.setStyle({ color: 'grey', fillColor: 'grey', fillOpacity: '0.3', opacity: '0.5' });
+//           });
+//         }
+  
+//         for (const name in (tooltips || {})) {
+//           const polys = polygonsByName[name];
+//           if (!polys) continue;
+//           const text = SECTOR_TOOLTIPS[name];
+//           polys.forEach(p => {
+//             if (p.getTooltip()) {
+//               p.setTooltipContent("");
+//             } 
+//           });
+//         }
+//       }
+//   });
+// }
+
 // -------------------------------------------------------------
 // CONFIGURE YOUR API BELOW
 // -------------------------------------------------------------
@@ -386,8 +517,9 @@ function parseApiResponse(data) {
     const startTime = new Date(Date.parse(data["data"]["armysectors"][entry]["weather"]["cat_start_on"]) + (currentTime.getTimezoneOffset() * 60000));
     const endTime = new Date(Date.parse(data["data"]["armysectors"][entry]["weather"]["cat_end_on"]) + (currentTime.getTimezoneOffset() * 60000));
     const updateTime = new Date(Date.parse(data["data"]["armysectors"][entry]["weather"]["update_on"]) + (currentTime.getTimezoneOffset() * 60000));
+    const psi = data["data"]["armysectors"][entry]["weather"]["PSI"];
     if (maxUpdate === null || updateTime > maxUpdate) maxUpdate = updateTime;
-    newCatInfo[name] = [raw, startTime, endTime, updateTime]
+    newCatInfo[name] = [raw, startTime, endTime, updateTime, psi]
   }
   latestUpdateTime = maxUpdate;
   catInfo = newCatInfo;
@@ -425,12 +557,15 @@ async function refreshColours() {
     if (loadingEl) loadingEl.style.display = 'none';
     if (bodyEl) bodyEl.style.display = '';
 
+    const catRow = document.getElementById('cat-toggle-row');
+    if (catRow) catRow.style.display = '';
+
     // Update the legend's timestamp line.
     const el = document.getElementById('legend-timestamps');
     if (el) {
       const updatedStr   = latestUpdateTime ? formatTime(latestUpdateTime) : '\u2014';
       const refreshedStr = formatTime(new Date());
-      el.textContent = `Updated ${updatedStr} | Refreshed ${refreshedStr}`;
+      el.textContent = `Updated ${updatedStr}H | Refreshed ${refreshedStr}H`;
     }
   } catch (err) {
     console.warn('Colour refresh failed:', err);
@@ -445,6 +580,7 @@ async function refreshColours() {
 refreshColours();
 setInterval(refreshColours, 10000); // 10 seconds
 setInterval(applyColours, 1000); // 1 second
+
 
 // =============================================================
 // User location — blue dot, Google Maps style.
@@ -569,7 +705,7 @@ async function refreshRainArea() {
       if (timeEl) {
         // SortingTime is ISO-like ("2026-05-05T18:35:00") — extract HH:MM and strip the colon for hhmm.
         const m = (latest.SortingTime || '').match(/T(\d{2}):(\d{2})/);
-        timeEl.textContent = m ? (m[1] + m[2]) : '';
+        timeEl.textContent = m ? (m[1] + m[2]+"H") : '';
       }
     };
     probe.onerror = () => {
@@ -664,3 +800,163 @@ async function refreshHeavyRain() {
 
 refreshHeavyRain();
 setInterval(refreshHeavyRain, 10000);
+
+// =============================================================
+// WBGT circles for each camp
+// Polls /wbgt. Each camp is a circle with a tooltip showing the latest reading.
+// =============================================================  
+
+ // ---------- CONFIG ----------
+  const POLL_INTERVAL_MS = 60 * 1000; // 1 minute
+  const RADIUS_METERS = 1000; // 1000 meters
+
+  // WBGT flag colour -> map colour
+  const CATEGORY_COLORS = {
+    white: '#ffffff',
+    green: '#2e7d32',
+    yellow: '#fbc02d',
+    red: '#e53935',
+    black: '#212121'
+  };
+  const NO_DATA_COLOR = '#9e9e9e';
+
+  function colorForCategory(cat) {
+    if (!cat) return NO_DATA_COLOR;
+    return CATEGORY_COLORS[cat.toLowerCase()] || NO_DATA_COLOR;
+  }
+
+// camp name -> L.circle instance, so updates modify in place rather than redrawing everything
+  const circlesByName = new Map();
+
+  function tooltipHtml(c) {
+    const reading = c.wbgtReading !== null ? c.wbgtReading.toFixed(1) : 'N/A';
+    const category = c.category || 'N/A';
+    const wrc = c.wrc || 'N/A';
+    const updatedOn = c.updatedOn ? c.updatedOn.toLocaleString() : 'N/A';
+    const lastUpdated = c.lastUpdated ? new Date(c.lastUpdated).toLocaleString() : 'N/A';
+    return `
+      <div class="wbgt-tooltip">
+        <b>${c.name}</b><br>
+        WBGT reading: ${reading}<br>
+        Category: ${category}<br>
+        WRC: ${wrc}<br>
+        Updated on: ${updatedOn}<br>
+        Last updated: ${lastUpdated}
+      </div>
+    `;
+  }
+
+  function upsertCircle(c) {
+    const color = colorForCategory(c.category);
+    let circle = circlesByName.get(c.name);
+
+    if (!circle) {
+      circle = L.circle([c.latitude, c.longitude], {
+        radius: RADIUS_METERS,
+        color: color,
+        weight: 1,
+        fillColor: color,
+        fillOpacity: 0.1
+      }).addTo(map);
+      circle.bindTooltip(tooltipHtml(c), { sticky: true });
+      circlesByName.set(c.name, circle);
+    } else {
+      circle.setStyle({ color: color, fillColor: color });
+      circle.setLatLng([c.latitude, c.longitude]); // in case coordinates ever change
+      circle.setTooltipContent(tooltipHtml(c));
+    }
+  }
+
+  // ---------- PARSER (from earlier step) ----------
+  function parseCampWbgtData(input) {
+    const data = typeof input === 'string' ? JSON.parse(input) : input;
+    if (!data || !data.result || !Array.isArray(data.data?.camps)) {
+      throw new Error('Invalid input: expected { result: true, data: { camps: [...] } }');
+    }
+    const lastUpdated = data.data.last_updated;
+    return data.data.camps.map(({ camp, wbgt }) => ({
+      name: camp.name,
+      latitude: camp.latitude,
+      longitude: camp.longitude,
+      wbgtReading: wbgt.wbgt_reading !== '' ? parseFloat(wbgt.wbgt_reading) : null,
+      category: wbgt.cat !== '' ? wbgt.cat : null,
+      wrc: wbgt.wrc !== '' ? wbgt.wrc : null,
+      updatedOn: wbgt.updated_on ? new Date(wbgt.updated_on) : null,
+      lastUpdated: lastUpdated
+    }));
+  }
+
+  function renderCamps(camps) {
+    // console.warn('renderCamps', camps);
+    camps.forEach(upsertCircle);
+  }
+
+  // Manual corrections for camps with broken/placeholder/duplicate coordinates.
+const CAMP_COORD_OVERRIDES = {
+  "TP 12/TP 16": { latitude: 1.405, longitude: 103.718 }, // duplicate entry also gave 1.412, 103.707 — confirm which is correct
+  "Jurong Camp I and II": { latitude: 1.334, longitude: 103.688 },
+  "Changi Airbase (West)": { latitude: 1.384, longitude: 103.983 },
+  "Changi Airbase (East)": { latitude: 1.323, longitude: 104.004 },
+  "Chong Pang Camp": { latitude: 1.432, longitude: 103.824 },
+  "Choa Chu Kang Camp": { latitude: 1.361, longitude: 103.683 },
+  "Lim Chu Kang Camp I/II": { latitude: 1.376, longitude: 103.697 },
+  "Sembawang Airbase": { latitude: 1.419, longitude: 103.818 },
+  "TP 2E/TP 2": { latitude: 1.363, longitude: 103.697 },
+  "C": { latitude: 1.370, longitude: 103.659 },
+  "D2/D3/MUTF": { latitude: 1.400, longitude: 103.684 },
+  "MA 8 - Upper Mandai": { latitude: 1.390, longitude: 103.795 },
+  "MA 8 - Lower Mandai": { latitude: 1.353, longitude: 103.812 },
+  "TP 9 - Zone 2": { latitude: 1.422, longitude: 104.051 },
+  "TP 9 - Zone 5": { latitude: 1.394, longitude: 104.065 }, // name doesn't match "(West)"/"(East)" variants in source data — clarify
+  "TP 9 - Sector A/Zone 1": { latitude: 1.413, longitude: 104.034 },
+  "TP 9 - Zone 5 (East)": { latitude: 1.398, longitude: 104.078 },
+  "TP 9 - Zone 5 (West)": { latitude: 1.389, longitude: 104.049 },
+  "TP 9 - Zone 3": { latitude: 1.413, longitude: 104.072 },
+  "TP 5E": { latitude: 1.419, longitude: 103.781 },
+  "TP 7": { latitude: 1.397, longitude: 103.844 },
+  "TP 6W/TP 6": { latitude: 1.402, longitude: 103.775 },
+  "TP 11": { latitude: 1.441, longitude: 103.852 },
+  "TP 4": { latitude: 1.399, longitude: 103.736 },
+};
+
+function applyCoordOverrides(camps) {
+  return camps.map(c => {
+    const override = CAMP_COORD_OVERRIDES[c.name];
+    if (override) {
+      return { ...c, latitude: override.latitude, longitude: override.longitude };
+    }
+    return c;
+  });
+}
+
+  async function refreshWBGT() {
+  try {
+    // Calls the local proxy (proxy.js), which forwards to SafeGuardian
+    // server-side with the bearer token. See proxy.js for setup.
+    const params = new URLSearchParams({ lat: "1.352083", long: "103.819839" });
+
+    const res = await fetch(`https://api.andewmole.com/cat1/getWBGT?${params.toString()}`, {
+      cache: 'no-store'
+    });
+    if (!res.ok) {
+      const status = res.status;
+      const err = new Error('HTTP ' + status);
+      err.status = status;
+      throw err;
+    }
+    const data = await res.json();
+    var camps = parseCampWbgtData(data);
+    camps = applyCoordOverrides(camps);
+    renderCamps(camps);
+  } catch (err) {
+    console.warn('wbgt refresh failed:', err);
+    // Show the server-error modal only for 5xx responses (server-side failure).
+    if (err.status >= 500 && err.status < 600) {
+      document.getElementById('error-backdrop').classList.add('visible');
+    }
+  }
+}
+
+  // Kick off immediately, then every minute
+  refreshWBGT();
+  setInterval(refreshWBGT, POLL_INTERVAL_MS);
