@@ -859,7 +859,7 @@ function upsertCircle(c) {
       fillColor: color,
       fillOpacity: 0.1
     }).addTo(map);
-    circle.bindTooltip(tooltipHtml(c), { sticky: true });
+    circle.bindTooltip(tooltipHtml(c), { sticky: true, direction: 'top' });
     circlesByName.set(c.name, circle);
   } else {
     circle.setStyle({ color: color, fillColor: color });
