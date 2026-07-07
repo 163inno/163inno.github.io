@@ -128,6 +128,10 @@ const WBGTLocations = [
   { name: "Tekong (Rocky Hill Camp)/TP 9 - Zone 4", latitude: 1.39832, longitude: 104.048 },
 ];
 
+ // ---------- CONFIG ----------
+  const POLL_INTERVAL_MS = 10 * 1000; // 10 Seconds
+  const RADIUS_METERS = 1000; // 1000 meters(Just a rough estimate of the area around the WBGT location to be considered for the WBGT value)
+
 // =============================================================
 // EDIT BELOW: Mouseover text shown when hovering each sector.
 // Plain text or basic HTML; "\n" creates a new line.
@@ -806,90 +810,87 @@ setInterval(refreshHeavyRain, 10000);
 // Polls /wbgt. Each camp is a circle with a tooltip showing the latest reading.
 // =============================================================  
 
- // ---------- CONFIG ----------
-  const POLL_INTERVAL_MS = 60 * 1000; // 1 minute
-  const RADIUS_METERS = 1000; // 1000 meters
+// WBGT flag colour -> map colour
+const CATEGORY_COLORS = {
+  white: '#ffffff',
+  green: '#2e7d32',
+  yellow: '#fbc02d',
+  red: '#e53935',
+  black: '#212121',
+  'cut-off': '#9e9e9e' 
+};
+const NO_DATA_COLOR = '#9e9e9e';
 
-  // WBGT flag colour -> map colour
-  const CATEGORY_COLORS = {
-    white: '#ffffff',
-    green: '#2e7d32',
-    yellow: '#fbc02d',
-    red: '#e53935',
-    black: '#212121'
-  };
-  const NO_DATA_COLOR = '#9e9e9e';
-
-  function colorForCategory(cat) {
-    if (!cat) return NO_DATA_COLOR;
-    return CATEGORY_COLORS[cat.toLowerCase()] || NO_DATA_COLOR;
-  }
+function colorForCategory(cat) {
+  if (!cat) return NO_DATA_COLOR;
+  return CATEGORY_COLORS[cat.toLowerCase()] || NO_DATA_COLOR;
+}
 
 // camp name -> L.circle instance, so updates modify in place rather than redrawing everything
-  const circlesByName = new Map();
+const circlesByName = new Map();
 
-  function tooltipHtml(c) {
-    const reading = c.wbgtReading !== null ? c.wbgtReading.toFixed(1) : 'N/A';
-    const category = c.category || 'N/A';
-    const wrc = c.wrc || 'N/A';
-    const updatedOn = c.updatedOn ? c.updatedOn.toLocaleString() : 'N/A';
-    const lastUpdated = c.lastUpdated ? new Date(c.lastUpdated).toLocaleString() : 'N/A';
-    return `
-      <div class="wbgt-tooltip">
-        <b>${c.name}</b><br>
-        WBGT reading: ${reading}<br>
-        Category: ${category}<br>
-        WRC: ${wrc}<br>
-        Updated on: ${updatedOn}<br>
-        Last updated: ${lastUpdated}
-      </div>
-    `;
+function tooltipHtml(c) {
+  const reading = c.wbgtReading !== null ? c.wbgtReading.toFixed(1) : 'N/A';
+  const category = c.category || 'N/A';
+  const wrc = c.wrc || 'N/A';
+  const updatedOn = c.updatedOn ? c.updatedOn.toLocaleString() : 'N/A';
+  const lastUpdated = c.lastUpdated ? new Date(c.lastUpdated).toLocaleString() : 'N/A';
+  return `
+    <div class="wbgt-tooltip">
+      <b>${c.name}</b><br>
+      WBGT reading: ${reading}<br>
+      Code: ${category}<br>
+      Work Rest Cycle: ${wrc}<br>
+      Updated on: ${updatedOn}<br>
+      Last updated: ${lastUpdated}
+    </div>
+  `;
+}
+
+function upsertCircle(c) {
+  const color = colorForCategory(c.category);
+  let circle = circlesByName.get(c.name);
+
+  if (!circle) {
+    circle = L.circle([c.latitude, c.longitude], {
+      radius: RADIUS_METERS,
+      color: color,
+      weight: 1,
+      fillColor: color,
+      fillOpacity: 0.1
+    }).addTo(map);
+    circle.bindTooltip(tooltipHtml(c), { sticky: true });
+    circlesByName.set(c.name, circle);
+  } else {
+    circle.setStyle({ color: color, fillColor: color });
+    circle.setLatLng([c.latitude, c.longitude]); // in case coordinates ever change
+    circle.setTooltipContent(tooltipHtml(c));
   }
+}
 
-  function upsertCircle(c) {
-    const color = colorForCategory(c.category);
-    let circle = circlesByName.get(c.name);
-
-    if (!circle) {
-      circle = L.circle([c.latitude, c.longitude], {
-        radius: RADIUS_METERS,
-        color: color,
-        weight: 1,
-        fillColor: color,
-        fillOpacity: 0.1
-      }).addTo(map);
-      circle.bindTooltip(tooltipHtml(c), { sticky: true });
-      circlesByName.set(c.name, circle);
-    } else {
-      circle.setStyle({ color: color, fillColor: color });
-      circle.setLatLng([c.latitude, c.longitude]); // in case coordinates ever change
-      circle.setTooltipContent(tooltipHtml(c));
-    }
+// ---------- PARSER (from earlier step) ----------
+function parseCampWbgtData(input) {
+  const data = typeof input === 'string' ? JSON.parse(input) : input;
+  if (!data || !data.result || !Array.isArray(data.data?.camps)) {
+    throw new Error('Invalid input: expected { result: true, data: { camps: [...] } }');
   }
+  const lastUpdated = data.data.last_updated;
+  return data.data.camps.map(({ camp, wbgt }) => ({
+    name: camp.name,
+    latitude: camp.latitude,
+    longitude: camp.longitude,
+    wbgtReading: wbgt.wbgt_reading !== '' ? parseFloat(wbgt.wbgt_reading) : null,
+    category: wbgt.cat !== '' ? wbgt.cat : null,
+    wrc: wbgt.wrc !== '' ? wbgt.wrc : null,
+    updatedOn: wbgt.updated_on ? new Date(wbgt.updated_on) : null,
+    lastUpdated: lastUpdated
+  }));
+}
 
-  // ---------- PARSER (from earlier step) ----------
-  function parseCampWbgtData(input) {
-    const data = typeof input === 'string' ? JSON.parse(input) : input;
-    if (!data || !data.result || !Array.isArray(data.data?.camps)) {
-      throw new Error('Invalid input: expected { result: true, data: { camps: [...] } }');
-    }
-    const lastUpdated = data.data.last_updated;
-    return data.data.camps.map(({ camp, wbgt }) => ({
-      name: camp.name,
-      latitude: camp.latitude,
-      longitude: camp.longitude,
-      wbgtReading: wbgt.wbgt_reading !== '' ? parseFloat(wbgt.wbgt_reading) : null,
-      category: wbgt.cat !== '' ? wbgt.cat : null,
-      wrc: wbgt.wrc !== '' ? wbgt.wrc : null,
-      updatedOn: wbgt.updated_on ? new Date(wbgt.updated_on) : null,
-      lastUpdated: lastUpdated
-    }));
-  }
-
-  function renderCamps(camps) {
-    // console.warn('renderCamps', camps);
-    camps.forEach(upsertCircle);
-  }
+function renderCamps(camps) {
+  // console.warn('renderCamps', camps);
+  camps.forEach(upsertCircle);
+}
 
   // Manual corrections for camps with broken/placeholder/duplicate coordinates.
 const CAMP_COORD_OVERRIDES = {
