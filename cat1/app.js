@@ -180,6 +180,15 @@ const map = L.map('map', {
   maxBounds: L.latLngBounds(L.latLng(1.06, 103.50), L.latLng(1.58, 104.19))
 });
 
+// iOS Safari collapses/expands its URL bar as you scroll, which changes the
+// visual viewport without necessarily firing a plain 'resize' event. Leaflet
+// caches the container size at init, so nudge it to recheck whenever the
+// viewport actually changes.
+window.addEventListener('resize', () => map.invalidateSize());
+if (window.visualViewport) {
+  window.visualViewport.addEventListener('resize', () => map.invalidateSize());
+}
+
 // =============================================================
 // Basemap layers — rotated through via the switcher control below.
 // OneMap only has tiles from z11 upward; minNativeZoom lets Leaflet
