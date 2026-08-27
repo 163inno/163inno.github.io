@@ -142,11 +142,13 @@ const SECTOR_TOOLTIPS = {};
 // Colour palette — adjust hex values here if you want to fine-tune.
 const COLOUR_PALETTE = {
   "grey":      { fill: "#b0b0b0", stroke: "#707070", fillOpacity: 0.5, opacity: 0.5 },
-  "green":     { fill: "#2ecc71", stroke: "#1e7e3b", fillOpacity: 0.3, opacity: 0.5 },
-  "yellow":    { fill: "#fff200", stroke: "#b8a800", fillOpacity: 0.3, opacity: 0.5 },
-  "orange":    { fill: "#ff8c00", stroke: "#a35a00", fillOpacity: 0.3, opacity: 0.5 },
-  "red":       { fill: "#b03020", stroke: "#5c1810", fillOpacity: 0.3, opacity: 0.5 },
-  "faded-red": { fill: "#b03020", stroke: "#5c1810", fillOpacity: 0.2, opacity: 0.5 }
+  "purple":     { fill: "#450263", stroke: "#1e7e3b", fillOpacity: 0.2, opacity: 0.5 },
+  "blue":     { fill: "#023463", stroke: "#1e7e3b", fillOpacity: 0.2, opacity: 0.5 },
+  "green":     { fill: "#2ecc71", stroke: "#1e7e3b", fillOpacity: 0.2, opacity: 0.5 },
+  "yellow":    { fill: "#fff200", stroke: "#b8a800", fillOpacity: 0.2, opacity: 0.5 },
+  "orange":    { fill: "#ff8c00", stroke: "#a35a00", fillOpacity: 0.2, opacity: 0.5 },
+  "red":       { fill: "#b03020", stroke: "#5c1810", fillOpacity: 0.2, opacity: 0.5 },
+  "faded-red": { fill: "#b03020", stroke: "#5c1810", fillOpacity: 0.1, opacity: 0.5 }
 };
 
 // Default style options applied to every polygon.
@@ -365,11 +367,13 @@ legend.onAdd = function () {
       //   '</label>' +
       //   '<label for="cat-toggle">CAT areas</label>' +
       // '</div>' +
-      '<div><span class="swatch" style="background:#2ecc71;opacity:0.5"></span>CAT 3</div>' +
-      '<div><span class="swatch" style="background:#fff200;opacity:0.5"></span>CAT 2</div>' +
-      '<div><span class="swatch" style="background:#ff8c00;opacity:0.5"></span>CAT 1 incoming</div>' +
-      '<div><span class="swatch" style="background:#b03020;opacity:0.5"></span>CAT 1</div>' +
-      '<div><span class="swatch" style="background:#b03020;opacity:0.2"></span>Pending CAT clear</div>' +
+      '<div><span class="swatch" style="background:#450263;opacity:0.2"></span>CAT 5 - Nil</div>' +
+      '<div><span class="swatch" style="background:#023463;opacity:0.2"></span>CAT 4 - Low</div>' +
+      '<div><span class="swatch" style="background:#2ecc71;opacity:0.2"></span>CAT 3 - Mod</div>' +
+      '<div><span class="swatch" style="background:#fff200;opacity:0.2"></span>CAT 2 - High</div>' +
+      '<div><span class="swatch" style="background:#ff8c00;opacity:0.1"></span>CAT 1 incoming</div>' +
+      '<div><span class="swatch" style="background:#b03020;opacity:0.2"></span>CAT 1 - V High</div>' +
+      '<div><span class="swatch" style="background:#b03020;opacity:0.1"></span>Pending CAT clear</div>' +
       '<div id="legend-timestamps" style="margin-top:6px;padding-top:6px;border-top:1px solid #ccc;font-size:11px;color:#555;">Updated &mdash; | Refreshed &mdash;</div>'+
     '</div>' +
     '<div id="rain-loading" class="toggle-row">Loading&hellip;</div>' +
@@ -511,6 +515,8 @@ function applyColours() {
 // than colour names, map them here. Leave as identity if the API
 // already returns "green" / "yellow" / "orange" / "red" / "faded-red".
 const STATUS_TO_COLOUR = {
+  '5':  'purple',
+  '4':  'blue',
   '3':  'green',
   '2':  'yellow',
   '1':  'orange',
