@@ -1,111 +1,169 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<title>163 SQN Innovate</title>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover, user-scalable=no">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>LIVE Lightning Risk & WGBT Map</title>
-
-<!-- Open Graph (Discord, WhatsApp, Facebook, LinkedIn, Telegram, iMessage) -->
-<meta property="og:title" content="LIVE Lightning Risk & WGBT Map">
-<meta property="og:description" content="Live updating CAT 1 lightning risk map with rain areas and WBGT status">
-<meta property="og:type" content="website">
-
-<!-- Twitter Card (also picked up by some other platforms) -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="LIVE Lightning Risk & WGBT Map">
-<meta name="twitter:description" content="Live updating CAT 1 lightning risk map with rain areas and WBGT status">
-
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-<link rel="stylesheet" href="style.css">
-</head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body {font-family: "Lato", sans-serif}
+.mySlides {display: none}
+</style>
 <body>
-<div id="rain-banner" role="alert">
-  <span id="rain-banner-text"></span>
-  <button class="close-btn" id="rain-banner-close" aria-label="Dismiss">&times;</button>
-</div>
-<!-- Safari Tinting Shims -->
-<div id="safari-top-shim"></div>
-<div id="safari-bottom-shim"></div>
-<div id="map"></div>
 
-<div id="error-backdrop" role="alertdialog" aria-labelledby="error-title" aria-modal="true">
-  <div id="error-modal">
-    <button id="error-close" aria-label="Close">&times;</button>
-    <h2 id="error-title">Map temporarily unavailable</h2>
-    <p style="margin:0;">
-      Dear users, this map is temporarily unavailable &mdash; either the SafeGuardian app or my server is down. We seek your kind understanding and patience. Thank you.
-    </p>
+<!-- Navbar -->
+<div class="w3-top">
+  <div class="w3-bar w3-black w3-card">
+    <a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+    <a href="#" class="w3-bar-item w3-button w3-padding-large">HOME</a>
+    <a href="#projects" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Projects</a>
+<!--     <a href="#telegrambot" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Telegram</a> -->
+    <!-- <div class="w3-dropdown-hover w3-hide-small">
+      <button class="w3-padding-large w3-button" title="More">MORE <i class="fa fa-caret-down"></i></button>     
+      <div class="w3-dropdown-content w3-bar-block w3-card-4">
+        <a href="#" class="w3-bar-item w3-button"></a>
+        <a href="#" class="w3-bar-item w3-button"></a>
+        <a href="#" class="w3-bar-item w3-button"></a>
+      </div>
+    </div> -->
+    <a href="javascript:void(0)" class="w3-padding-large w3-hover-red w3-hide-small w3-right"><i class="fa fa-search"></i></a>
   </div>
 </div>
 
-<div id="credits-backdrop" role="dialog" aria-labelledby="credits-title" aria-modal="true">
-  <div id="credits-modal">
-    <button id="credits-close" aria-label="Close">&times;</button>
-    <h2 id="credits-title">Lightning risk levels</h2>
-    <div class="row">
-      <div style="border-left:4px solid #2ecc71; padding:4px 0 4px 8px; margin-bottom:5px;">
-        <strong>CAT 3:</strong> Outdoor activities are allowed.
-      </div>
-      <div style="border-left:4px solid #fff200; padding:4px 0 4px 8px; margin-bottom:5px;">
-        <strong>CAT 2:</strong> Outdoor activities to be decided by conducting structure.
-      </div>
-      <div style="border-left:4px solid #b03020; padding:4px 0 4px 8px;">
-        <strong>CAT 1:</strong> Heavy rain and/or lightning risk. Outdoor activities are <strong>NOT ALLOWED</strong>.
-      </div>
-    </div>
-    <h2 style="font-size:17px; margin:18px 0 12px;">Wet Bulb Globe Temperature (WBGT) Status</h2>
-    <div class="row">
-      The WBGT locations are not actual locations of the WBGT sensors, but are instead estimates of the actual locations. They will still provide a good reference for WBGT status.<br>
-      <div style="border-left:4px solid #ededed; padding:4px 0 4px 8px; margin-bottom:5px;">
-        <strong>Code White</strong> 29.9°C and below: 60mins work, 15mins rest
-      </div>
-      <div style="border-left:4px solid #59ef37; padding:4px 0 4px 8px; margin-bottom:5px;">
-        <strong>Code Green</strong> 30.0°C to 30.9°C: 45mins work, 15mins rest
-      </div>
-      <div style="border-left:4px solid #cfed26; padding:4px 0 4px 8px; margin-bottom:5px;">
-        <strong>Code Yellow</strong> 31.0°C to 31.9°C: 30mins work, 15mins rest
-      </div>
-      <div style="border-left:4px solid #f51b1b; padding:4px 0 4px 8px; margin-bottom:5px;">
-        <strong>Code Red</strong> 32.0°C to 32.9°C: 30mins work, 30mins rest
-      </div>
-      <div style="border-left:4px solid #000000; padding:4px 0 4px 8px; margin-bottom:5px;">
-        <strong>Code Black</strong> 33.0°C to 34.9°C: 15mins work, 30mins rest
-      </div>
-      <div style="border-left:4px solid #9e9e9e; padding:4px 0 4px 8px; margin-bottom:5px;">
-        <strong>Cut-off</strong> 35.0°C and above: No Strenuous Training
-      </div>
-    </div>
-    <h2 style="font-size:17px; margin:18px 0 12px;">Credits</h2>
-    <div class="row">
-      <div class="label">CAT status data</div>
-      <a href="https://safeguardian.defence.gov.sg/" target="_blank" rel="noopener">SafeGuardian</a>
-      <div class="app-badges">
-        <a class="app-badge" href="https://apps.apple.com/sg/app/safeguardian/id1558990521" target="_blank" rel="noopener">App Store</a>
-        <a class="app-badge" href="https://play.google.com/store/apps/details?id=sg.mindef.ns.safeguardian" target="_blank" rel="noopener">Google Play</a>
-      </div>
-    </div>
-    <div class="row">
-      <div class="label">Rain areas &amp; weather alerts</div>
-      <a href="https://www.nea.gov.sg/weather/rain-areas" target="_blank" rel="noopener">National Environment Agency</a>
-    </div>
-    <div class="row">
-      <div class="label">Basemaps</div>
-      <a href="https://www.openstreetmap.org/" target="_blank" rel="noopener">OpenStreetMap</a>, <a href="https://www.onemap.gov.sg/" target="_blank" rel="noopener">OneMap</a> (<a href="https://www.sla.gov.sg/" target="_blank" rel="noopener">Singapore Land Authority</a>)
-    </div>
-    <div class="row" style="border-top:1px solid #eee; padding-top:12px;">
-      <span style="font-weight:600;">Thanks to <a href="https://github.com/ajlee2006" target="_blank" rel="noopener">ajlee2006</a> for the boilerplate.</span> 
-    </div>
-    <div class="row" style="border-top:1px solid #eee; padding-top:12px;">
-      <span style="font-weight:600;">Enhanced by <a href="https://github.com/Anraza-Valtieri">Seeker</a></span> 
-  </div>
+<!-- Navbar on small screens (remove the onclick attribute if you want the navbar to always show on top of the content when clicking on the links) -->
+<div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
+  <a href="#projects" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Projects</a>
+<!--   <a href="#telegrambot" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Telegram</a> -->
 </div>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-<!-- <script src="app.js"></script> -->
-<script src="app.js?v=1.281"></script>
+<!-- Page content -->
+<div class="w3-content" style="max-width:2000px;margin-top:46px">
+
+  <!-- Automatic Slideshow Images -->
+  <div class="mySlides w3-display-container w3-center">
+    <img src="/img/163sqn.jpg" style="width:100%">
+	  <div id="particles-js"></div>
+    <div class="w3-display-bottommiddle w3-container w3-text-white w3-padding-32 w3-hide-small">
+    </div>
+  </div>
+
+
+  <!-- The projects Section -->
+  <div class="w3-white" id="projects">
+    <div class="w3-container w3-content w3-padding">
+      <h2 class="w3-wide w3-center">Projects</h2>
+      <p class="w3-opacity w3-center"><i>Projects created by the people of 163 SQN!</i></p><br>
+
+      <div class="w3-row-padding w3-stretch">
+         
+		 <div class="w3-panel w3-section w3-third">
+			<header class="w3-container w3-light-grey">
+			  <h3>TxM Counter</h3>
+			</header>
+
+			<div class="w3-container">
+			  <p>Created by Rubik</p>
+			  <hr>
+			  <p>A web application to aid with creating TxM counter messages</p>
+			</div>
+
+			<!-- <button class="w3-button w3-block w3-dark-grey">View</button> -->
+			<a href="/txm/" class="w3-button w3-block w3-dark-grey">View</a>
+
+		</div>
+		
+		<div class="w3-panel w3-section w3-third">
+			<header class="w3-container w3-light-grey">
+			  <h3>Telegram Bot</h3>
+			</header>
+
+			<div class="w3-container">
+			  <p>Created by Seeker</p>
+			  <hr>
+			  <p>Telegram Bot for Temperature reporting and Weather alerts</p>
+			</div>
+
+			<a href="https://t.me/abovethebestbot" class="w3-button w3-block w3-dark-grey">View</a>
+
+		</div>
+		
+		<div class="w3-panel w3-section w3-third">
+			<header class="w3-container w3-light-grey">
+			  <h3>Lightning Risk (CAT 1) Map</h3>
+			</header>
+
+			<div class="w3-container">
+			  <p>Adapted by Seeker</p>
+			  <hr>
+			  <p>Live Map displaying all CAT 1 Sectors</p>
+			</div>
+
+			<a href="https://163inno.github.io/cat1/index.html" class="w3-button w3-block w3-dark-grey">CAT 1 Map</a>
+
+		</div>
+		<div class="w3-panel w3-section w3-third">
+			<header class="w3-container w3-light-grey">
+			  <h3>Innovation?</h3>
+			</header>
+
+			<div class="w3-container">
+			  <p>Created by the next innovative idea</p>
+			  <hr>
+			  <p>This spot could be yours! Share with us your idea and see it come to live</p>
+			</div>
+
+			<a href="#" class="w3-button w3-block w3-dark-grey">Share!</a>
+
+		</div>
+         
+        </div>
+  
+<!-- End projects Content -->
+	</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Footer -->
+<footer class="w3-container w3-center w3-opacity w3-light-grey">
+  <p class="w3-medium">Powered by w3.css & Github Pages</p>
+</footer>
+
+<script>
+// Automatic Slideshow - change image every 4 seconds
+var myIndex = 0;
+carousel();
+
+function carousel() {
+  var i;
+  var x = document.getElementsByClassName("mySlides");
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";  
+  }
+  myIndex++;
+  if (myIndex > x.length) {myIndex = 1}    
+  x[myIndex-1].style.display = "block";  
+  setTimeout(carousel, 4000);    
+}
+
+// Used to toggle the menu on small screens when clicking on the menu button
+function myFunction() {
+  var x = document.getElementById("navDemo");
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+
+// When the user clicks anywhere outside of the modal, close it
+var modal = document.getElementById('ticketModal');
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+</script>
+
 </body>
 </html>
